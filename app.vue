@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h5 class="text-3xl font-bold underline text-blue-600">sdfsdf</h5>
+		<h5 class="text-3xl font-bold text-blue-600 underline">sdfsdf</h5>
 	</div>
 </template>
 
