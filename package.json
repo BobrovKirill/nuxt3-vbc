@@ -1,0 +1,56 @@
+{
+	"name": "nuxt-vbc",
+	"private": true,
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
+	},
+	"devDependencies": {
+		"@babel/eslint-parser": "7.18.9",
+		"@babel/eslint-plugin": "7.16.5",
+		"@nuxt/devtools": "latest",
+		"@nuxtjs/eslint-config-typescript": "^12.0.0",
+		"@nuxtjs/style-resources": "^1.2.1",
+		"@nuxtjs/tailwindcss": "^6.8.0",
+		"@types/node": "^18",
+		"@typescript-eslint/eslint-plugin": "^5.60.1",
+		"@typescript-eslint/parser": "^5.60.1",
+		"autoprefixer": "^10.4.14",
+		"eslint": "^8.40.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-optimize-regex": "^1.2.1",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-pug": "^1.2.4",
+		"eslint-plugin-sonarjs": "^0.11.0",
+		"eslint-plugin-vue": "^9.12.0",
+		"nuxt": "^3.6.1",
+		"postcss": "^8.4.24",
+		"stylus": "^0.59.0",
+		"stylus-loader": "^3.0.2",
+		"tailwindcss": "^3.3.2",
+		"typescript": "^5.1.6",
+		"vite-plugin-eslint": "^1.8.1",
+		"vite-plugin-imagemin": "^0.6.1",
+		"vite-plugin-pug": "^0.3.1",
+		"vite-plugin-remove-console": "^0.0.7"
+	},
+	"dependencies": {
+		"@pinia/nuxt": "^0.4.9"
+	},
+	"browserslist": [
+		"last 1 version",
+		"last 4 Chrome versions",
+		"last 4 ChromeAndroid version",
+		"last 3 Firefox version",
+		"last 3 FirefoxAndroid version",
+		"last 3 Opera versions",
+		"last 3 Safari versions",
+		"last 3 iOS version",
+		"not IE 11",
+		"not dead"
+	]
+}
