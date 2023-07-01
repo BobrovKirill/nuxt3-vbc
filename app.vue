@@ -1,7 +1,7 @@
 <template>
-	<div>
-		<h5 class="text-3xl font-bold text-blue-600 underline">sdfsdf</h5>
-	</div>
+	<main class="h-screen w-screen overflow-hidden rounded-[50px]">
+		<NuxtPage />
+	</main>
 </template>
 
 <script setup>
