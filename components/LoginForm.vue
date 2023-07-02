@@ -28,6 +28,10 @@ const formData = {
 		],
 	},
 };
+
+function submit() {
+	console.log('emit work!');
+}
 </script>
 
 <template>
@@ -38,7 +42,7 @@ const formData = {
 		>
 			<FormHeader :header-data="formData.headerData" />
 			<FormInputs :inputs-data="formData.inputsData" />
-			<FormFooter :footer-data="formData.footerData" />
+			<FormFooter :footer-data="formData.footerData" @submit="submit" />
 		</form>
 	</div>
 </template>

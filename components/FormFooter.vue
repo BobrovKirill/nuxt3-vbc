@@ -2,11 +2,15 @@
 const props = defineProps({
 	footerData: Object,
 });
+const emits = defineEmits(['submit']);
+function submit() {
+	emits('submit');
+}
 </script>
 
 <template>
 	<div class="flex w-full flex-col items-center gap-5">
-		<button type="submit" class="submit-btn">
+		<button type="submit" class="submit-btn" @click.prevent="submit">
 			{{ props.footerData.button }}
 		</button>
 		<p class="text-center text-base text-[#71717A]">

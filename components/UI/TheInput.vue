@@ -1,13 +1,30 @@
 <script setup lang="ts">
+import { isValidate } from '~/utils';
+
 const props = defineProps({
 	inputItem: Object,
 });
+const emits = defineEmits(['checkInput']);
+// Проверяем является ли инпут с типом пароль
 const isPasswordType = (text) => text === 'password';
+// Если инпун с паролем оборачиваем в реф
 const inputType = isPasswordType(props.inputItem.type)
 	? ref(props.inputItem.type)
 	: props.inputItem.type;
+// меняем тип инпута при нажатии на кнопку
 function toggleShowPassord() {
 	inputType.value = isPasswordType(inputType.value) ? 'text' : 'password';
+}
+
+// Запускаем валидацию
+function checkInput({ target }) {
+	if (isValidate(target)) {
+		console.log(target);
+		emits('checkInput', {
+			name: target.name,
+			value: target.value,
+		});
+	}
 }
 </script>
 
@@ -27,6 +44,7 @@ function toggleShowPassord() {
 			required
 			:autocomplete="props.inputItem.name"
 			:placeholder="props.inputItem.name"
+			@input="checkInput"
 		/>
 		<button
 			v-if="isPasswordType(props.inputItem.type)"

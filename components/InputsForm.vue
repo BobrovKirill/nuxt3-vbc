@@ -4,6 +4,9 @@ import TheInput from '~/components/UI/TheInput.vue';
 const props = defineProps({
 	inputsData: Object,
 });
+function checkInputs(data) {
+	console.log(data);
+}
 </script>
 
 <template>
@@ -12,6 +15,7 @@ const props = defineProps({
 			v-for="inputItem in props.inputsData.inputList"
 			:key="inputItem.key"
 			:input-item="inputItem"
+			@check-input="checkInputs"
 		/>
 	</div>
 </template>
