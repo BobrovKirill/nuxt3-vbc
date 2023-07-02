@@ -16,7 +16,7 @@ export default defineComponent({
 	<div
 		class="grid-rows-[1fr, auto] grid h-full grid-cols-1 xl:grid-cols-2 xl:grid-rows-1"
 	>
-		<h1>login</h1>
+		<LoginForm />
 		<TheInfo :img-src="infoImgPath" :img-alt="imgAlt">
 			<template #title>Connect with any device.</template>
 			<template #text>Everything you need is an internet connection.</template>
