@@ -2,7 +2,13 @@
 const props = defineProps({
 	inputItem: Object,
 });
-const isShowEye = (text) => text.includes('password');
+const isPasswordType = (text) => text === 'password';
+const inputType = isPasswordType(props.inputItem.type)
+	? ref(props.inputItem.type)
+	: props.inputItem.type;
+function toggleShowPassord() {
+	inputType.value = isPasswordType(inputType.value) ? 'text' : 'password';
+}
 </script>
 
 <template>
@@ -16,13 +22,18 @@ const isShowEye = (text) => text.includes('password');
 		<input
 			:id="props.inputItem.name"
 			class="input"
-			:type="props.inputItem.type"
+			:type="inputType"
 			:name="props.inputItem.name"
 			required
 			:autocomplete="props.inputItem.name"
 			:placeholder="props.inputItem.name"
 		/>
-		<button v-if="isShowEye(props.inputItem.type)" type="button" class="eye">
+		<button
+			v-if="isPasswordType(props.inputItem.type)"
+			type="button"
+			class="eye"
+			@click="toggleShowPassord"
+		>
 			<svg class="mx-auto h-[30px] w-[30px]">
 				<use xlink:href="#eye" />
 			</svg>

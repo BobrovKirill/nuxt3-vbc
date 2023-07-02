@@ -3,28 +3,30 @@ import FormInputs from '~/components/InputsForm.vue';
 import FormHeader from '~/components/FormHeader.vue';
 import FormFooter from '~/components/FormFooter.vue';
 
-const headerData = {
-	type: 'login',
-	title: 'Login to your Account',
-	subtitle: 'with email',
-};
-const footerData = {
-	button: 'log in',
-	text: 'You have account?',
-	linkList: [{ id: '1', url: '/signup', text: 'Create an account' }],
-};
-const inputsData = {
-	type: 'login',
-	inputList: [
-		{ id: '1', type: 'text', label: 'email', name: 'email', icon: 'email' },
-		{
-			id: '2',
-			type: 'password',
-			label: 'password',
-			name: 'password',
-			icon: 'password',
-		},
-	],
+const formData = {
+	headerData: {
+		type: 'login',
+		title: 'Login to your Account',
+		subtitle: 'with email',
+	},
+	footerData: {
+		button: 'log in',
+		text: 'You have account?',
+		linkList: [{ id: '1', url: '/signup', text: 'Create an account' }],
+	},
+	inputsData: {
+		type: 'login',
+		inputList: [
+			{ id: '1', type: 'text', label: 'email', name: 'email', icon: 'email' },
+			{
+				id: '2',
+				type: 'password',
+				label: 'password',
+				name: 'password',
+				icon: 'password',
+			},
+		],
+	},
 };
 </script>
 
@@ -34,9 +36,9 @@ const inputsData = {
 			action="#"
 			class="flex w-full max-w-[477px] flex-col items-center gap-[25px]"
 		>
-			<FormHeader :header-data="headerData" />
-			<FormInputs :inputs-data="inputsData" />
-			<FormFooter :footer-data="footerData" />
+			<FormHeader :header-data="formData.headerData" />
+			<FormInputs :inputs-data="formData.inputsData" />
+			<FormFooter :footer-data="formData.footerData" />
 		</form>
 	</div>
 </template>
