@@ -11,7 +11,7 @@ const formData = {
 	},
 	footerData: {
 		button: 'log in',
-		text: 'You have account?',
+		text: 'Don’t have account?',
 		linkList: [{ id: '1', url: '/signup', text: 'Create an account' }],
 	},
 	inputsData: {

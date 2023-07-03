@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import TheInput from '~/components/UI/TheInput.vue';
+import { isValidate } from '~/utils';
 
 const props = defineProps({
 	inputsData: Object,
 });
-function checkInputs(data) {
+
+function getValue(data: { name: string; value: string }) {
 	console.log(data);
+	if (isValidate(data)) {
+		console.log(data);
+	}
 }
 </script>
 
@@ -15,7 +20,7 @@ function checkInputs(data) {
 			v-for="inputItem in props.inputsData.inputList"
 			:key="inputItem.key"
 			:input-item="inputItem"
-			@check-input="checkInputs"
+			@send-value="getValue"
 		/>
 	</div>
 </template>
