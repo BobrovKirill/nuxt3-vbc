@@ -1,37 +1,34 @@
 <script setup lang="ts">
 import TheInput from '~/components/UI/TheInput.vue';
 
-import { isValidate } from '~/utils';
+import { isConfirmPassword, isValidate } from '~/utils';
 
 const props = defineProps({
 	inputsData: Object,
 });
 const emits = defineEmits(['isValidForm']);
-const formData = new Map();
 const validIputList = new Set();
+let requaredInputLength = 0;
+const inputs = ref();
 
-function getValue({ name, value }) {
-	formData.set(name, value);
-
-	const values =
-		name === 'confirm-password'
-			? {
-					password: formData.get('password'),
-					confirm: formData.get(name),
-			  }
-			: formData.get(name);
-	const forValidateData = { type: name, values };
-
-	if (isValidate(forValidateData)) {
+onMounted(() => {
+	const inputList = inputs.value.querySelectorAll('input[required]');
+	requaredInputLength = inputList.length;
+});
+function getValue(input) {
+	const hasValidate =
+		input.name === 'confirm-password'
+			? isConfirmPassword(input.value, 'qqqq')
+			: isValidate(input);
+	if (hasValidate) {
 		validIputList.add(name);
-		emits('isValidForm', isValidForm);
 	} else {
 		validIputList.delete(name);
 	}
 	checkValidForm();
 }
 
-const isValidForm = () => formData.size === validIputList.size;
+const isValidForm = () => requaredInputLength === validIputList.size;
 
 function checkValidForm() {
 	emits('isValidForm', isValidForm());
@@ -39,7 +36,7 @@ function checkValidForm() {
 </script>
 
 <template>
-	<div class="flex w-full flex-col items-center gap-2.5">
+	<div ref="inputs" class="flex w-full flex-col items-center gap-2.5">
 		<TheInput
 			v-for="inputItem in props.inputsData.inputList"
 			:key="inputItem.key"
