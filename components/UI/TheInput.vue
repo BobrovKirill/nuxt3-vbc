@@ -19,12 +19,17 @@ const inputType = isPasswordType(props.inputItem.type)
 	? ref<string | undefined>(props.inputItem.type)
 	: props.inputItem.type;
 
+const eyeIcon = ref(null);
 // меняем тип инпута при нажатии на кнопку
 function toggleShowPassord() {
-	inputType.value = isPasswordType(inputType.value) ? 'text' : 'password';
+	const isPassword = isPasswordType(inputType.value);
+	inputType.value = isPassword ? 'text' : 'password';
+	eyeIcon.value.setAttribute(
+		'xlink:href',
+		`${isPassword ? '#open-eye' : '#close-eye'}`,
+	);
 }
 
-// Запускаем валидацию
 function setValue(event: { target: HTMLInputElement }) {
 	const target = event.target;
 	emits('sendValue', {
@@ -59,7 +64,7 @@ function setValue(event: { target: HTMLInputElement }) {
 			@click="toggleShowPassord"
 		>
 			<svg class="mx-auto h-[30px] w-[30px]">
-				<use xlink:href="#eye" />
+				<use ref="eyeIcon" xlink:href="#close-eye" />
 			</svg>
 		</button>
 	</div>

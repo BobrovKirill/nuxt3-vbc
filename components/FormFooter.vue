@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps({
 	footerData: Object,
+	isValid: Boolean,
 });
 const emits = defineEmits(['submit']);
 function submit() {
@@ -10,7 +11,12 @@ function submit() {
 
 <template>
 	<div class="flex w-full flex-col items-center gap-5">
-		<button type="submit" class="submit-btn" @click.prevent="submit">
+		<button
+			type="submit"
+			class="submit-btn"
+			:disabled="!isValid"
+			@click.prevent="submit"
+		>
 			{{ props.footerData.button }}
 		</button>
 		<p class="text-center text-base text-[#71717A]">
@@ -28,7 +34,7 @@ function submit() {
 
 <style>
 .submit-btn {
-	@apply flex h-[64px] w-full max-w-[453px] items-center justify-center rounded-[10px] bg-[#8098F9] p-2.5;
+	@apply flex h-[64px] w-full max-w-[453px] items-center justify-center rounded-[10px] bg-[#8098F9] p-2.5 disabled:opacity-50;
 	@apply font-inter text-xl/[24px] uppercase text-[#ffffff];
 }
 </style>

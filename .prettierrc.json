@@ -1,7 +1,7 @@
 {
 	"singleQuote": true,
 	"arrowParens": "always",
-	"max-len": ["error", 256, 2],
+	"max-len": ["error", 300, 2],
 	"tabWidth": 2,
 	"useTabs": true,
 	"semi": true,

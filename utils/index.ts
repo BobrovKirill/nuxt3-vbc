@@ -1,11 +1,10 @@
-const isValidate = (input): boolean => {
-	const type = input.type;
-	// const value = input.value;
-	if (type === 'email') {
-		return true;
-		// eslint-disable-next-line sonarjs/no-duplicated-branches
-	} else if (type === 'password') {
-		return true;
+const isValidate = (data): boolean => {
+	if (data.type === 'email') {
+		return data.values.length >= 2;
+	} else if (data.type === 'password') {
+		return data.values.length >= 2;
+	} else if (data.type === 'confirm-password') {
+		return data.values.password === data.values.confirm;
 	}
 	return false;
 };

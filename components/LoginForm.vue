@@ -28,9 +28,12 @@ const formData = {
 		],
 	},
 };
-
+const isValid = ref<boolean>(false);
+const isValidForm = (status: boolean) => (isValid.value = status);
 function submit() {
-	console.log('emit work!');
+	if (isValid.value) {
+		console.log('emit work!');
+	}
 }
 </script>
 
@@ -41,8 +44,15 @@ function submit() {
 			class="flex w-full max-w-[477px] flex-col items-center gap-[25px]"
 		>
 			<FormHeader :header-data="formData.headerData" />
-			<FormInputs :inputs-data="formData.inputsData" />
-			<FormFooter :footer-data="formData.footerData" @submit="submit" />
+			<FormInputs
+				:inputs-data="formData.inputsData"
+				@is-valid-form="isValidForm"
+			/>
+			<FormFooter
+				:footer-data="formData.footerData"
+				:is-valid="isValid"
+				@submit="submit"
+			/>
 		</form>
 	</div>
 </template>
