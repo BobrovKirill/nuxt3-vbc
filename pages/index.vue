@@ -17,13 +17,21 @@ const formData = {
 	inputsData: {
 		type: 'login',
 		inputList: [
-			{ id: '1', type: 'text', label: 'email', name: 'email', icon: 'email' },
+			{
+				id: '1',
+				type: 'text',
+				label: 'email',
+				name: 'email',
+				icon: 'email',
+				required: true,
+			},
 			{
 				id: '2',
 				type: 'password',
 				label: 'password',
 				name: 'password',
 				icon: 'password',
+				required: true,
 			},
 		],
 	},

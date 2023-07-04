@@ -20,6 +20,7 @@ const inputType = isPasswordType(props.inputItem.type)
 	: props.inputItem.type;
 
 const eyeIcon = ref(null);
+const input = ref();
 // меняем тип инпута при нажатии на кнопку
 function toggleShowPassord() {
 	const isPassword = isPasswordType(inputType.value);
@@ -29,12 +30,18 @@ function toggleShowPassord() {
 		`${isPassword ? '#open-eye' : '#close-eye'}`,
 	);
 }
-
-function setValue(event: { target: HTMLInputElement }) {
+onMounted(() => {
+	sendEmit(input.value);
+});
+function inputListener(event: { target: HTMLInputElement }) {
 	const target = event.target;
+	sendEmit(target);
+}
+function sendEmit(input) {
 	emits('sendValue', {
-		name: target.name,
-		value: target.value,
+		name: input.name,
+		value: input.value,
+		required: input.required,
 	});
 }
 </script>
@@ -49,13 +56,14 @@ function setValue(event: { target: HTMLInputElement }) {
 		</svg>
 		<input
 			:id="props.inputItem.name"
+			ref="input"
 			class="input"
 			:type="inputType"
 			:name="props.inputItem.name"
 			required
 			:autocomplete="props.inputItem.name"
 			:placeholder="props.inputItem.name"
-			@input="setValue"
+			@input="inputListener"
 		/>
 		<button
 			v-if="isPasswordType(props.inputItem.type)"

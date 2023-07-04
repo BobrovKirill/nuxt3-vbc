@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import TheInput from '~/components/UI/TheInput.vue';
-
+import { useFormState } from '~/store';
 import { isConfirmPassword, isValidate } from '~/utils';
 
 const props = defineProps({
 	inputsData: Object,
 });
 const emits = defineEmits(['isValidForm']);
+
 const validIputList = new Set();
 let requaredInputLength = 0;
 const inputs = ref();
@@ -15,15 +16,38 @@ onMounted(() => {
 	const inputList = inputs.value.querySelectorAll('input[required]');
 	requaredInputLength = inputList.length;
 });
-function getValue(input) {
-	const hasValidate =
-		input.name === 'confirm-password'
-			? isConfirmPassword(input.value, 'qqqq')
-			: isValidate(input);
-	if (hasValidate) {
-		validIputList.add(name);
+
+const formState = useFormState();
+
+function validatePasswords(input) {
+	if (input.name === 'password') {
+		const confirmPassword = formState.form.confirmPassword;
+		if (confirmPassword?.length) {
+			validateInput({ name: 'confirm-password', value: confirmPassword });
+		}
+		return isValidate(input);
 	} else {
-		validIputList.delete(name);
+		return isConfirmPassword(formState.form.password, input.value);
+	}
+}
+function validateInput(input) {
+	formState.form[input.name] = input.value;
+
+	const hasValidate = input.name.includes('password')
+		? validatePasswords(input)
+		: isValidate(input);
+
+	if (hasValidate) {
+		validIputList.add(input.name);
+	} else {
+		validIputList.delete(input.name);
+	}
+}
+function getValue(input) {
+	if (input.required) {
+		validateInput(input);
+	} else {
+		formState.form[input.name] = input.value;
 	}
 	checkValidForm();
 }
@@ -31,6 +55,9 @@ function getValue(input) {
 const isValidForm = () => requaredInputLength === validIputList.size;
 
 function checkValidForm() {
+	console.log(formState.form);
+	console.log(requaredInputLength, ' ??', validIputList.size);
+	console.log('finish', isValidForm());
 	emits('isValidForm', isValidForm());
 }
 </script>

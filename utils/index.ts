@@ -1,6 +1,9 @@
-const isValidate = (input): boolean => {
-	const name = input.name;
-	const value = input.value;
+const isValidate = (input: {
+	name: string;
+	value: string | boolean;
+}): boolean => {
+	const name: string = input.name;
+	const value: string | boolean = input.value;
 	if (name === 'email') {
 		return value.length >= 2;
 	} else if (name === 'password') {

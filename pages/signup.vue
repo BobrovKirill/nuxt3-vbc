@@ -12,14 +12,29 @@ const formData = {
 	inputsData: {
 		type: 'login',
 		inputList: [
-			{ id: '1', type: 'text', label: 'user', name: 'user', icon: 'user' },
-			{ id: '2', type: 'text', label: 'email', name: 'email', icon: 'email' },
+			{
+				id: '1',
+				type: 'text',
+				label: 'user',
+				name: 'user',
+				icon: 'user',
+				required: false,
+			},
+			{
+				id: '2',
+				type: 'text',
+				label: 'email',
+				name: 'email',
+				icon: 'email',
+				required: true,
+			},
 			{
 				id: '3',
 				type: 'password',
 				label: 'password',
 				name: 'password',
 				icon: 'password',
+				required: true,
 			},
 			{
 				id: '4',
@@ -27,6 +42,15 @@ const formData = {
 				label: 'confirm-password',
 				name: 'confirm-password',
 				icon: 'password',
+				required: true,
+			},
+			{
+				id: '5',
+				type: 'checkbox',
+				label: 'Accept terms and conditions',
+				name: 'check',
+				icon: '',
+				required: false,
 			},
 		],
 	},
