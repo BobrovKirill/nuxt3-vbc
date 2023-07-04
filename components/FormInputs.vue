@@ -2,6 +2,7 @@
 import TheInput from '~/components/UI/TheInput.vue';
 import { useFormState } from '~/store';
 import { isConfirmPassword, isValidate } from '~/utils';
+import TheCkeckbox from '~/components/UI/TheCkeckbox.vue';
 
 const props = defineProps({
 	inputsData: Object,
@@ -12,6 +13,13 @@ const validIputList = new Set();
 let requaredInputLength = 0;
 const inputs = ref();
 
+const inputList = props.inputsData.inputList.filter(
+	(input) => input.type !== 'checkbox',
+);
+const checkboxList = props.inputsData.inputList.filter(
+	(input) => input.type === 'checkbox',
+);
+console.log(checkboxList);
 onMounted(() => {
 	const inputList = inputs.value.querySelectorAll('input[required]');
 	requaredInputLength = inputList.length;
@@ -65,7 +73,13 @@ function checkValidForm() {
 <template>
 	<div ref="inputs" class="flex w-full flex-col items-center gap-2.5">
 		<TheInput
-			v-for="inputItem in props.inputsData.inputList"
+			v-for="inputItem in inputList"
+			:key="inputItem.key"
+			:input-item="inputItem"
+			@send-value="getValue"
+		/>
+		<TheCkeckbox
+			v-for="inputItem in checkboxList"
 			:key="inputItem.key"
 			:input-item="inputItem"
 			@send-value="getValue"

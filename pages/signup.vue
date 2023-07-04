@@ -15,8 +15,8 @@ const formData = {
 			{
 				id: '1',
 				type: 'text',
-				label: 'user',
-				name: 'user',
+				label: 'name',
+				name: 'name',
 				icon: 'user',
 				required: false,
 			},
@@ -47,7 +47,8 @@ const formData = {
 			{
 				id: '5',
 				type: 'checkbox',
-				label: 'Accept terms and conditions',
+				label: 'Accept',
+				links: [{ id: '1', url: '#', text: 'terms and conditions' }],
 				name: 'check',
 				icon: '',
 				required: false,

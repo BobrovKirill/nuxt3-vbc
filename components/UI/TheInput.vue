@@ -60,7 +60,7 @@ function sendEmit(input) {
 			class="input"
 			:type="inputType"
 			:name="props.inputItem.name"
-			required
+			:required="props.inputItem.required"
 			:autocomplete="props.inputItem.name"
 			:placeholder="props.inputItem.name"
 			@input="inputListener"
