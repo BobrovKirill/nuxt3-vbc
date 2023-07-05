@@ -36,4 +36,4 @@ function submit() {
 	</div>
 </template>
 
-<style scoped></style>
+<style></style>

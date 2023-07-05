@@ -22,7 +22,7 @@ const inputType = isPasswordType(props.inputItem.type)
 const eyeIcon = ref(null);
 const input = ref();
 // меняем тип инпута при нажатии на кнопку
-function toggleShowPassord() {
+function toggleShowPassword() {
 	const isPassword = isPasswordType(inputType.value);
 	inputType.value = isPassword ? 'text' : 'password';
 	eyeIcon.value.setAttribute(
@@ -30,19 +30,17 @@ function toggleShowPassord() {
 		`${isPassword ? '#open-eye' : '#close-eye'}`,
 	);
 }
+function sendEmit(input) {
+	emits('sendValue', input);
+}
 onMounted(() => {
-	sendEmit(input.value);
+	if (!input.value) {
+		sendEmit(input.value);
+	}
 });
 function inputListener(event: { target: HTMLInputElement }) {
 	const target = event.target;
 	sendEmit(target);
-}
-function sendEmit(input) {
-	emits('sendValue', {
-		name: input.name,
-		value: input.value,
-		required: input.required,
-	});
 }
 </script>
 
@@ -69,7 +67,7 @@ function sendEmit(input) {
 			v-if="isPasswordType(props.inputItem.type)"
 			type="button"
 			class="eye"
-			@click="toggleShowPassord"
+			@click="toggleShowPassword"
 		>
 			<svg class="mx-auto h-[30px] w-[30px]">
 				<use ref="eyeIcon" xlink:href="#close-eye" />
@@ -85,6 +83,9 @@ function sendEmit(input) {
 .input {
 	@apply h-full w-full rounded-[10px] border-2 border-[#8098f9]/50 bg-[#8098f9]/10 p-2.5;
 	@apply font-inter text-lg/[24px] text-[#206D93] placeholder:text-[#2d31a6]/20;
+}
+.input[data-invalid] {
+	@apply border-red-500;
 }
 input:-webkit-autofill {
 	-webkit-text-fill-color: #2d63b2 !important;

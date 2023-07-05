@@ -26,8 +26,8 @@ function submit() {
 				:key="item.id"
 				class="text-[#8098F9]"
 			>
-				<NuxtLink :to="item.url">{{ item.text }}</NuxtLink></span
-			>
+				<NuxtLink :to="item.url">{{ item.text }}</NuxtLink>
+			</span>
 		</p>
 	</div>
 </template>

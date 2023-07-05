@@ -42,14 +42,16 @@ function sendEmit(input) {
 				@input="inputListener"
 			/>
 			<span class="checkbox" />
-			<div>
+			<span>
 				{{ props.inputItem.label }}
-				<ul class="inline-block">
-					<li v-for="link in props.inputItem.links" :key="link.id">
-						<a :href="link.url">{{ link.text }}</a>
-					</li>
-				</ul>
-			</div>
+				<a
+					v-for="link in props.inputItem.links"
+					:key="link.id"
+					:href="link.url"
+				>
+					{{ link.text }}
+				</a>
+			</span>
 		</label>
 	</div>
 </template>
