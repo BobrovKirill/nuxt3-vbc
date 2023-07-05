@@ -22,11 +22,7 @@ function inputListener(event: { target: HTMLInputElement }) {
 	sendEmit(target);
 }
 function sendEmit(input) {
-	emits('sendValue', {
-		name: input.name,
-		value: input.value,
-		required: input.required,
-	});
+	emits('sendValue', input);
 }
 </script>
 

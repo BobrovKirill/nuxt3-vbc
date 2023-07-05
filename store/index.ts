@@ -5,9 +5,10 @@ export const useFormState = defineStore('formState', () => {
 	const form = ref({
 		user: '',
 		email: '',
+		value: '',
 		password: '',
 		'confirm-password': '',
-		check: '',
+		check: false,
 	});
 
 	return { form };

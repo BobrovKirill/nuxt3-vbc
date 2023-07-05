@@ -5,13 +5,14 @@ const isValidate = (input: HTMLInputElement | undefined): boolean => {
 		return value?.length >= 2;
 	} else if (name === 'password') {
 		return value?.length >= 2;
+	} else if (name === 'check') {
+		return input.checked;
 	} else {
-		return true;
+		return false;
 	}
 };
 
-const isConfirmPassword = (password, confirmPassword): boolean => {
-	return password === confirmPassword;
-};
+const isConfirmPassword = (password, confirmPassword): boolean =>
+	password === confirmPassword;
 
 export { isValidate, isConfirmPassword };

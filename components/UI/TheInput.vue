@@ -31,7 +31,12 @@ function toggleShowPassword() {
 	);
 }
 function sendEmit(input) {
-	emits('sendValue', input);
+	console.log(input);
+	const name = input.name;
+	const value = input.type === 'checkbox' ? input.checked : input.value;
+	const required = input.required;
+	console.log('value', value);
+	emits('sendValue', { name, value, required });
 }
 onMounted(() => {
 	if (!input.value) {
@@ -57,6 +62,7 @@ function inputListener(event: { target: HTMLInputElement }) {
 			ref="input"
 			class="input"
 			:type="inputType"
+			data-invalid=""
 			:name="props.inputItem.name"
 			:required="props.inputItem.required"
 			:autocomplete="props.inputItem.name"
