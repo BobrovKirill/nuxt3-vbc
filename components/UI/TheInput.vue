@@ -31,12 +31,12 @@ function toggleShowPassword() {
 	);
 }
 function sendEmit(input) {
-	console.log(input);
 	const name = input.name;
-	const value = input.type === 'checkbox' ? input.checked : input.value;
+	const type = input.type;
+	const value = input.value;
 	const required = input.required;
-	console.log('value', value);
-	emits('sendValue', { name, value, required });
+	emits('sendValue', { name, type, value, required });
+
 }
 onMounted(() => {
 	if (!input.value) {
@@ -62,7 +62,7 @@ function inputListener(event: { target: HTMLInputElement }) {
 			ref="input"
 			class="input"
 			:type="inputType"
-			data-invalid=""
+			:data-invalid="props.inputItem.valid.value"
 			:name="props.inputItem.name"
 			:required="props.inputItem.required"
 			:autocomplete="props.inputItem.name"
@@ -90,7 +90,7 @@ function inputListener(event: { target: HTMLInputElement }) {
 	@apply h-full w-full rounded-[10px] border-2 border-[#8098f9]/50 bg-[#8098f9]/10 p-2.5;
 	@apply font-inter text-lg/[24px] text-[#206D93] placeholder:text-[#2d31a6]/20;
 }
-.input[data-invalid] {
+.input[data-invalid='false'] {
 	@apply border-red-500;
 }
 input:-webkit-autofill {

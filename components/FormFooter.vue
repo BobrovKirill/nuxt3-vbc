@@ -14,7 +14,7 @@ function submit() {
 		<button
 			type="submit"
 			class="submit-btn"
-			:disabled="!isValid"
+			:disabled="!isValid.value"
 			@click.prevent="submit"
 		>
 			{{ props.footerData.button }}
