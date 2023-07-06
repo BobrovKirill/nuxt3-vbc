@@ -5,16 +5,27 @@ const props = defineProps({
 </script>
 
 <template>
-	<div class="flex w-full flex-col gap-[25px]">
-		<h1 class="text-bold text-center text-[40px]/[39px] text-[#09090B]">
+	<div
+		:class="{ 'items-center gap-[25px]': props.headerData.subtitle }"
+		class="flex w-full flex-col"
+	>
+		<h1 class="text-[40px]/[39px] font-bold text-[#09090B]">
 			{{ props.headerData.title }}
 		</h1>
+		<p v-if="props.headerData.text" class="text-xl/[24px] text-[#71717A]">
+			{{ props.headerData.text }}
+			<span v-if="props.headerData.email" class="text-[#8098F9]">
+				{{ props.headerData.email }}
+			</span>
+			<span class="block text-[#8098F9]">
+				<NuxtLink v-if="props.headerData.link" :to="props.headerData.link">
+					Change email
+				</NuxtLink>
+			</span>
+		</p>
 		<p
-			class="text-[15px]/[24px] font-medium text-[#71717A]"
-			:class="{
-				'two-lines flex items-center justify-between':
-					props.headerData.type === 'login',
-			}"
+			v-if="props.headerData.subtitle"
+			class="two-lines flex w-full items-center justify-between px-3 text-[15px]/[24px] font-medium text-[#71717A]"
 		>
 			{{ props.headerData.subtitle }}
 		</p>

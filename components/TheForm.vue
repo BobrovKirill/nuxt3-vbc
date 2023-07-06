@@ -34,7 +34,10 @@ function submit() {
 			class="flex w-full max-w-[477px] flex-col items-center gap-[25px]"
 		>
 			<FormHeader :header-data="props.formData.headerData" />
-			<fieldset ref="inputs" class="flex w-full flex-col items-center gap-2.5">
+			<fieldset
+				ref="inputs"
+				class="flex w-full flex-col items-center gap-2.5 px-3"
+			>
 				<TheInput
 					v-for="inputItem in inputList"
 					:key="inputItem.key"

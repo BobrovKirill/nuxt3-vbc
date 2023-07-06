@@ -83,7 +83,7 @@ function inputListener(event: { target: HTMLInputElement }) {
 
 <style>
 .label {
-	@apply relative h-[64px] w-full max-w-[453px];
+	@apply relative h-[64px] w-full;
 }
 .input {
 	@apply h-full w-full rounded-[10px] border-2 border-[#8098f9]/50 bg-[#8098f9]/10 p-2.5;

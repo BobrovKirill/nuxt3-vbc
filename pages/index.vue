@@ -4,7 +4,7 @@ import { useFormState } from '~/store';
 const { formState, isChangeValue } = useFormState();
 
 const infoData = {
-	infoImgPath: '/_nuxt/assets/images/login-img.png',
+	infoImgPath: '/_nuxt/assets/images/login-img',
 	imgAlt: 'изображение гаджетов',
 };
 

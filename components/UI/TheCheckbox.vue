@@ -31,7 +31,7 @@ function sendEmit(input) {
 </script>
 
 <template>
-	<label class="flex items-center gap-2.5">
+	<label class="flex items-center self-start">
 		<input
 			ref="input"
 			class="appearance-none"
@@ -53,7 +53,7 @@ function sendEmit(input) {
 
 <style>
 .checkbox {
-	@apply h-[20px] w-[20px] rounded border-[2px] border-[#8098F9];
+	@apply mr-2.5 h-[20px] w-[20px] rounded border-[2px] border-[#8098F9];
 }
 input:checked + .checkbox {
 	background-position: center;

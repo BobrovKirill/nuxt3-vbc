@@ -4,7 +4,7 @@ import { validRequiredCounter, isValidate } from '~/utils';
 const { formState, isChangeValue, isChangePassword } = useFormState();
 
 const infoData = {
-	infoImgPath: '/_nuxt/assets/images/signup-img.png',
+	infoImgPath: '/_nuxt/assets/images/signup-img',
 	imgAlt: 'изображение связей',
 };
 const formData = {
@@ -13,7 +13,8 @@ const formData = {
 	headerData: {
 		type: 'signup',
 		title: 'Create your account',
-		subtitle: 'Unlock all Features!',
+		text: 'Unlock all Features!',
+		subtitle: '',
 	},
 	inputsData: [
 		{
