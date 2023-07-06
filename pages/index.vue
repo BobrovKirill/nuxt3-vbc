@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import { isValidate, validRequiredCounter } from '~/utils';
+import { useFormState } from '~/store';
+const { formState, isChangeValue } = useFormState();
+
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/login-img.png',
 	imgAlt: 'изображение гаджетов',
 };
+
 const formData = {
 	type: 'signin',
-	valid: false,
+	isValid: ref(false),
 	headerData: {
 		title: 'Login to your Account',
 		subtitle: 'with email',
@@ -18,6 +23,7 @@ const formData = {
 			name: 'email',
 			icon: 'email',
 			required: true,
+			valid: ref(null),
 		},
 		{
 			id: '2',
@@ -26,6 +32,7 @@ const formData = {
 			name: 'password',
 			icon: 'password',
 			required: true,
+			valid: ref(null),
 		},
 	],
 	footerData: {
@@ -34,13 +41,40 @@ const formData = {
 		linkList: [{ id: '1', url: '/signup', text: 'Create an account' }],
 	},
 };
+
+function checkValidateForm() {
+	formData.isValid.value = validRequiredCounter(formData.inputsData);
+}
+
+const runValidate = (name, value) => isValidate(name, value);
+
+function sendDataForm(data) {
+	formData.inputsData.forEach((input) => {
+		if (!isChangeValue(input.name, data[input.name]?.value)) {
+			formState[input.name] = data[input.name]?.value;
+			if (data[input.name]?.required) {
+				input.valid.value = runValidate(input.name, data[input.name].value);
+			}
+		}
+	});
+	checkValidateForm();
+}
+function submit() {
+	if (formData.isValid.value) {
+		alert('EEEEEEEEEEEEe');
+	}
+}
 </script>
 
 <template>
 	<div
 		class="grid-rows-[1fr, auto] grid h-full grid-cols-1 xl:grid-cols-2 xl:grid-rows-1"
 	>
-		<TheForm :form-data="formData" />
+		<TheForm
+			:form-data="formData"
+			@send-data-form="sendDataForm"
+			@submit="submit"
+		/>
 		<TheInfo :img-src="infoData.infoImgPath" :img-alt="infoData.imgAlt">
 			<template #title>Connect with any device.</template>
 			<template #text>Everything you need is an internet connection.</template>

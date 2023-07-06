@@ -1,7 +1,9 @@
 const isValidate = (name, value): boolean => {
 	if (name === 'email') {
+		// return /(?=^.{5,320}$)^([a-z\d_-]+\.)*[a-z\d_-]+@[a-z\d_-]+(\.[a-z\d_-]+)*\.[a-z]{2,6}$/.test(value); - если нужна валидации email
 		return value?.length >= 2;
 	} else if (name === 'password') {
+		// return /(?=^.{8,128}$)^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/.test(value); - если нужна валидации пароля
 		return value?.length >= 2;
 	} else if (name === 'check') {
 		return value;

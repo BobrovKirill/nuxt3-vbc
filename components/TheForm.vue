@@ -50,7 +50,7 @@ function submit() {
 			</fieldset>
 			<FormFooter
 				:footer-data="props.formData.footerData"
-				:is-valid="props.formData.isValid"
+				:is-valid="props.formData.isValid.value"
 				@submit="submit"
 			/>
 		</form>
