@@ -26,8 +26,8 @@ export default defineComponent({
 					:alt="imgAlt"
 				/>
 				<source :srcset="imgSrc + '-2x.png' + ' ' + '2x'" />
-				<source type="image/webp" :srcset="imgSrc + '.webp'" /> </picture
-			>s
+				<source type="image/webp" :srcset="imgSrc + '.webp'" />
+			</picture>
 			<p
 				class="col-start-1 col-end-2 row-start-1 row-end-2 mb-[-152px] self-end py-[50px] text-center text-xl font-bold text-[#E0EAFF]"
 			>
