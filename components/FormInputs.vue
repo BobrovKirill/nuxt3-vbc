@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TheInput from '~/components/UI/TheInput.vue';
 import { useFormState } from '~/store';
-import { isConfirmPassword, isValidate } from '~/utils';
+import { isValidate } from '~/utils';
 import TheCheckbox from '~/components/UI/TheCheckbox.vue';
 
 const props = defineProps({
