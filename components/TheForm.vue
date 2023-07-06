@@ -1,18 +1,29 @@
 <script setup lang="ts">
-import FormInputs from '~/components/FormInputs.vue';
 import FormHeader from '~/components/FormHeader.vue';
 import FormFooter from '~/components/FormFooter.vue';
+import TheInput from '~/components/UI/TheInput.vue';
+import TheCheckbox from '~/components/UI/TheCheckbox.vue';
 
 const props = defineProps({
 	formData: Object,
 });
+const emits = defineEmits(['sendDataForm', 'submit']);
+// TODO переделать на Map
+const result = {};
 
-const isValid = ref<boolean>(false);
-const isValidForm = (status: boolean) => (isValid.value = status);
+const inputList = props.formData.inputsData.filter(
+	(input) => input.type !== 'checkbox',
+);
+const checkboxList = props.formData.inputsData.filter(
+	(input) => input.type === 'checkbox',
+);
+function getValue(data) {
+	const { name, type, value, required } = data;
+	result[name] = { type, value, required };
+	emits('sendDataForm', result);
+}
 function submit() {
-	if (isValid.value) {
-		console.log('emit work!');
-	}
+	emits('submit');
 }
 </script>
 
@@ -23,13 +34,23 @@ function submit() {
 			class="flex w-full max-w-[477px] flex-col items-center gap-[25px]"
 		>
 			<FormHeader :header-data="props.formData.headerData" />
-			<FormInputs
-				:inputs-data="props.formData.inputsData"
-				@is-valid-form="isValidForm"
-			/>
+			<fieldset ref="inputs" class="flex w-full flex-col items-center gap-2.5">
+				<TheInput
+					v-for="inputItem in inputList"
+					:key="inputItem.key"
+					:input-item="inputItem"
+					@send-value="getValue"
+				/>
+				<TheCheckbox
+					v-for="inputItem in checkboxList"
+					:key="inputItem.key"
+					:input-item="inputItem"
+					@send-value="getValue"
+				/>
+			</fieldset>
 			<FormFooter
 				:footer-data="props.formData.footerData"
-				:is-valid="isValid"
+				:is-valid="props.formData.isValid"
 				@submit="submit"
 			/>
 		</form>

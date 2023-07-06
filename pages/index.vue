@@ -4,36 +4,34 @@ const infoData = {
 	imgAlt: 'изображение гаджетов',
 };
 const formData = {
+	type: 'signin',
+	valid: false,
 	headerData: {
-		type: 'login',
 		title: 'Login to your Account',
 		subtitle: 'with email',
 	},
+	inputsData: [
+		{
+			id: '1',
+			type: 'text',
+			label: 'email',
+			name: 'email',
+			icon: 'email',
+			required: true,
+		},
+		{
+			id: '2',
+			type: 'password',
+			label: 'password',
+			name: 'password',
+			icon: 'password',
+			required: true,
+		},
+	],
 	footerData: {
 		button: 'log in',
 		text: 'Don’t have account?',
 		linkList: [{ id: '1', url: '/signup', text: 'Create an account' }],
-	},
-	inputsData: {
-		type: 'login',
-		inputList: [
-			{
-				id: '1',
-				type: 'text',
-				label: 'email',
-				name: 'email',
-				icon: 'email',
-				required: true,
-			},
-			{
-				id: '2',
-				type: 'password',
-				label: 'password',
-				name: 'password',
-				icon: 'password',
-				required: true,
-			},
-		],
 	},
 };
 </script>

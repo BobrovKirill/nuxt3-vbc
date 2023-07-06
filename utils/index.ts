@@ -1,17 +1,27 @@
-const isValidate = (input: HTMLInputElement | undefined): boolean => {
-	const name: string = input?.name;
-	const value: string = input?.value;
+const isValidate = (name, value): boolean => {
 	if (name === 'email') {
 		return value?.length >= 2;
 	} else if (name === 'password') {
 		return value?.length >= 2;
+	} else if (name === 'check') {
+		return value;
 	} else {
-		return true;
+		return false;
 	}
 };
-
-const isConfirmPassword = (password, confirmPassword): boolean => {
-	return password === confirmPassword;
+const isRef = (value) => Object.hasOwn(value, '_rawValue');
+const validRequiredCounter = (arr) => {
+	let requiredCount = 0;
+	let validCount = 0;
+	arr.forEach((item) => {
+		if (isRef(item.valid) ? item.valid.value : item.value) {
+			validCount += 1;
+		}
+		if (item.required) {
+			requiredCount += 1;
+		}
+	});
+	return requiredCount === validCount;
 };
 
-export { isValidate, isConfirmPassword };
+export { validRequiredCounter, isValidate };
