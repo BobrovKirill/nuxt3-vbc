@@ -9,6 +9,7 @@ export const useFormState = defineStore('stateForm', () => {
 		'confirm-password': '',
 		check: false,
 		key: '',
+
 	});
 	const isChangeValue = (name, newValue) => formState.value[name] === newValue;
 	const isChangePassword = () =>

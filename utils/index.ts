@@ -4,7 +4,8 @@ const isValidate = (name, value): boolean => {
 	} else if (name === 'password') {
 		return value?.length >= 2;
 	} else if (name === 'check') {
-		return value;
+
+		return input.checked;
 	} else {
 		return false;
 	}
@@ -23,5 +24,6 @@ const validRequiredCounter = (arr) => {
 	});
 	return requiredCount === validCount;
 };
+
 
 export { validRequiredCounter, isValidate };

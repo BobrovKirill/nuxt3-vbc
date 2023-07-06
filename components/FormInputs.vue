@@ -9,7 +9,7 @@ const props = defineProps({
 });
 const emits = defineEmits(['isValidForm']);
 
-const validInputList = new Set();
+const validInputSet = new Set();
 let requiredInputLength = 0;
 const inputs = ref();
 
@@ -19,22 +19,42 @@ const inputList = props.inputsData.inputList.filter(
 const checkboxList = props.inputsData.inputList.filter(
 	(input) => input.type === 'checkbox',
 );
+
 onMounted(() => {
 	const inputList = inputs.value.querySelectorAll('input[required]');
 	requiredInputLength = inputList.length;
 });
 
 const formState = useFormState();
+
+function valid(name) {
+	validInputSet.add(name);
+}
+
+function invalid(name) {
+	validInputSet.delete(name);
+}
+
+function checkConfirmPassword(password) {
+	const confirmPassword = formState.form['confirm-password'];
+	const passwordMatching = isConfirmPassword(password, confirmPassword);
+	if (confirmPassword.length) {
+		passwordMatching ? valid('confirm-password') : invalid('confirm-password');
+	}
+}
 function validatePasswords(input) {
 	if (input.name === 'password') {
-		const confirmPassword = formState.form.confirmPassword;
-		if (confirmPassword?.length) {
-			validateInput({ name: 'confirm-password', value: confirmPassword });
-		}
+		checkConfirmPassword(input.value);
 		return isValidate(input);
 	} else {
-		return isConfirmPassword(formState.form.password, input.value);
+		const passowrd = formState.form.password;
+		return checkConfirmPassword(passowrd);
 	}
+}
+function checkValidForm() {
+	console.log(formState.form);
+	console.log('finish', isValidForm());
+	emits('isValidForm', isValidForm());
 }
 function validateInput(input) {
 	formState.form[input.name] = input.value;
@@ -44,20 +64,14 @@ function validateInput(input) {
 		: isValidate(input);
 
 	if (hasValidate) {
-		validInputList.add(input.name);
-		input.removeAttribute('data-invalid');
+		valid(input.name);
 	} else {
-		validInputList.delete(input.name);
-		input.setAttribute('data-invalid', '');
+		invalid(input.name);
 	}
+
+	checkValidForm();
 }
 
-function checkValidForm() {
-	console.log(formState.form);
-	console.log(requiredInputLength, ' ??', validInputList.size);
-	console.log('finish', isValidForm());
-	emits('isValidForm', isValidForm());
-}
 function getValue(input) {
 	if (input.required) {
 		validateInput(input);
@@ -67,7 +81,7 @@ function getValue(input) {
 	checkValidForm();
 }
 
-const isValidForm = () => requiredInputLength === validInputList.size;
+const isValidForm = () => requiredInputLength === validInputSet.size;
 </script>
 
 <template>

@@ -36,6 +36,7 @@ function sendEmit(input) {
 	const value = input.value;
 	const required = input.required;
 	emits('sendValue', { name, type, value, required });
+
 }
 onMounted(() => {
 	if (!input.value) {

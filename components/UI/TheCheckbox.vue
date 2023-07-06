@@ -27,6 +27,7 @@ function sendEmit(input) {
 		value: input.checked,
 		required: input.required,
 	});
+
 }
 </script>
 
