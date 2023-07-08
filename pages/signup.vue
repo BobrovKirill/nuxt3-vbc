@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { useFormState } from '~/store';
 import { validRequiredCounter, isValidate } from '~/utils';
-const { formState, isChangeValue, isChangePassword } = useFormState();
+import ThePopup from '~/components/ThePopup.vue';
+const {
+	formState,
+	isChangeValue,
+	isChangePassword,
+	changeVisiblePopup,
+	getPopupStatus,
+} = useFormState();
 
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/signup-img',
@@ -67,7 +74,7 @@ const formData = {
 	footerData: {
 		button: 'sign up',
 		text: 'You have account? ',
-		linkList: [{ id: '1', url: '/', text: 'Login now' }],
+		link: { id: '1', url: '/', text: 'Login now' },
 	},
 };
 
@@ -111,6 +118,14 @@ function submit() {
 		alert('EEEEEEEEEEEEe');
 	}
 }
+
+function popupAnswer(answer) {
+	if (answer) {
+		navigateTo('/');
+	} else {
+		changeVisiblePopup();
+	}
+}
 </script>
 
 <template>
@@ -121,6 +136,7 @@ function submit() {
 			:form-data="formData"
 			@send-data-form="sendDataForm"
 			@submit="submit"
+			@show-popup="changeVisiblePopup"
 		/>
 		<TheInfo :img-src="infoData.infoImgPath" :img-alt="infoData.imgAlt">
 			<template #title>Join us!</template>
@@ -128,6 +144,7 @@ function submit() {
 				Just go through the boring process of creating an account.
 			</template>
 		</TheInfo>
+		<ThePopup :is-show-popup="getPopupStatus" @popup-answer="popupAnswer" />
 	</div>
 </template>
 

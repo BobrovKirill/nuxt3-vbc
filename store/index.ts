@@ -10,9 +10,24 @@ export const useFormState = defineStore('stateForm', () => {
 		check: false,
 		key: '',
 	});
+	const isShowPopup = ref(false);
+
+	const getPopupStatus = computed(() => {
+		return isShowPopup;
+	});
+	const changeVisiblePopup = () => {
+		isShowPopup.value = !isShowPopup.value;
+	};
 	const isChangeValue = (name, newValue) => formState.value[name] === newValue;
 	const isChangePassword = () =>
 		formState.value.password === formState.value['confirm-password'];
 
-	return { isChangePassword, formState, isChangeValue };
+	return {
+		isChangePassword,
+		formState,
+		isShowPopup,
+		changeVisiblePopup,
+		isChangeValue,
+		getPopupStatus,
+	};
 });

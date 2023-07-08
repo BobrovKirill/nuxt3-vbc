@@ -38,7 +38,7 @@ const formData = {
 	footerData: {
 		button: 'log in',
 		text: 'Don’t have account?',
-		linkList: [{ id: '1', url: '/signup', text: 'Create an account' }],
+		link: { id: '1', url: '/signup', text: 'Create an account' },
 	},
 };
 
@@ -61,7 +61,7 @@ function sendDataForm(data) {
 }
 function submit() {
 	if (formData.isValid.value) {
-		alert('EEEEEEEEEEEEe');
+		navigateTo('/otp');
 	}
 }
 </script>

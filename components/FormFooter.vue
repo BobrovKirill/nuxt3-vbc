@@ -3,9 +3,12 @@ const props = defineProps({
 	footerData: Object,
 	isValid: Boolean,
 });
-const emits = defineEmits(['submit']);
+const emits = defineEmits(['submit', 'showPopup']);
 function submit() {
 	emits('submit');
+}
+function showPopup() {
+	emits('showPopup');
 }
 </script>
 
@@ -21,13 +24,22 @@ function submit() {
 		</button>
 		<p class="text-center text-base text-[#71717A]">
 			{{ props.footerData.text }}
-			<span
-				v-for="item in props.footerData.linkList"
-				:key="item.id"
-				class="text-[#8098F9]"
+
+			<NuxtLink
+				v-if="props.footerData.link.url !== '/'"
+				class="nuxt text-[#8098F9]"
+				:to="props.footerData.link.url"
 			>
-				<NuxtLink :to="item.url">{{ item.text }}</NuxtLink>
-			</span>
+				{{ props.footerData.link.text }}
+			</NuxtLink>
+			<a
+				v-if="props.footerData.link.url === '/'"
+				class="link text-[#8098F9]"
+				:href="props.footerData.link.url"
+				@click.prevent="showPopup"
+			>
+				{{ props.footerData.link.text }}
+			</a>
 		</p>
 	</div>
 </template>

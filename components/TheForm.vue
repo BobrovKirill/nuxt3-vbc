@@ -7,7 +7,7 @@ import TheCheckbox from '~/components/UI/TheCheckbox.vue';
 const props = defineProps({
 	formData: Object,
 });
-const emits = defineEmits(['sendDataForm', 'submit']);
+const emits = defineEmits(['sendDataForm', 'submit', 'showPopup']);
 // TODO переделать на Map
 const result = {};
 
@@ -24,6 +24,9 @@ function getValue(data) {
 }
 function submit() {
 	emits('submit');
+}
+function showPopup() {
+	emits('showPopup');
 }
 </script>
 
@@ -54,6 +57,7 @@ function submit() {
 			<FormFooter
 				:footer-data="props.formData.footerData"
 				:is-valid="props.formData.isValid.value"
+				@show-popup="showPopup"
 				@submit="submit"
 			/>
 		</form>
