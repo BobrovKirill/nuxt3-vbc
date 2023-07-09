@@ -3,12 +3,12 @@ import { ref } from 'vue';
 
 export const useFormState = defineStore('stateForm', () => {
 	const formState = ref({
-		user: '1',
-		email: 'q',
+		user: '',
+		email: 'xxxxxx@mail.com',
 		password: '',
 		'confirm-password': '',
 		check: false,
-		key: '',
+		key: {},
 	});
 	const isShowPopup = ref(false);
 
@@ -17,6 +17,16 @@ export const useFormState = defineStore('stateForm', () => {
 	});
 	const changeVisiblePopup = () => {
 		isShowPopup.value = !isShowPopup.value;
+	};
+	const resetState = () => {
+		formState.value.user = '';
+		formState.value.password = '';
+		formState.value['confirm-password'] = '';
+		formState.value.check = false;
+	};
+	const resetStatePasswords = () => {
+		formState.value.password = '';
+		formState.value['confirm-password'] = '';
 	};
 	const isChangeValue = (name, newValue) => formState.value[name] === newValue;
 	const isChangePassword = () =>
@@ -29,5 +39,7 @@ export const useFormState = defineStore('stateForm', () => {
 		changeVisiblePopup,
 		isChangeValue,
 		getPopupStatus,
+		resetState,
+		resetStatePasswords,
 	};
 });

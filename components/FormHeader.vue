@@ -17,7 +17,7 @@ const props = defineProps({
 			<span v-if="props.headerData.email" class="text-[#8098F9]">
 				{{ props.headerData.email }}
 			</span>
-			<span class="block text-[#8098F9]">
+			<span class="block text-base font-bold text-[#8098F9]">
 				<NuxtLink v-if="props.headerData.link" :to="props.headerData.link">
 					Change email
 				</NuxtLink>

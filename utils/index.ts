@@ -7,6 +7,8 @@ const isValidate = (name, value): boolean => {
 		return value?.length >= 2;
 	} else if (name === 'check') {
 		return value;
+	} else if (name.includes('key')) {
+		return value?.length >= 1;
 	} else {
 		return false;
 	}

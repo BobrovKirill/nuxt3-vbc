@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
-const { formState, isChangeValue } = useFormState();
+const { formState } = useFormState();
 
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/otp-img',
@@ -9,7 +10,7 @@ const infoData = {
 };
 
 const formData = {
-	type: 'signin',
+	type: 'otp',
 	isValid: ref(false),
 	headerData: {
 		title: 'Enter OTP',
@@ -21,54 +22,60 @@ const formData = {
 	inputsData: [
 		{
 			id: '1',
-			type: 'text',
+			type: 'number',
 			label: 'key number 1',
 			name: 'key1',
+			placeholder: '-',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '2',
-			type: 'text',
+			type: 'number',
 			label: 'key number 2',
 			name: 'key2',
+			placeholder: '-',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '3',
-			type: 'text',
+			type: 'number',
 			label: 'key number 3',
 			name: 'key3',
+			placeholder: '-',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '4',
-			type: 'text',
+			type: 'number',
 			label: 'key number 4',
 			name: 'key4',
+			placeholder: '-',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '5',
-			type: 'text',
+			type: 'number',
 			label: 'key number 5',
 			name: 'key5',
+			placeholder: '-',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '6',
-			type: 'text',
+			type: 'number',
 			label: 'key number 6',
 			name: 'key6',
+			placeholder: '-',
 			icon: '',
 			required: true,
 			valid: ref(null),
@@ -78,7 +85,6 @@ const formData = {
 		button: 'SUBMIT',
 	},
 };
-
 function checkValidateForm() {
 	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
@@ -87,18 +93,42 @@ const runValidate = (name, value) => isValidate(name, value);
 
 function sendDataForm(data) {
 	formData.inputsData.forEach((input) => {
-		if (!isChangeValue(input.name, data[input.name]?.value)) {
-			formState[input.name] = data[input.name]?.value;
-			if (data[input.name]?.required) {
-				input.valid.value = runValidate(input.name, data[input.name].value);
-			}
+		if (data[input.name]?.required) {
+			input.valid.value = runValidate(input.name, data[input.name].value);
 		}
 	});
+	formState.key = { ...data };
+	console.log(formState.key);
 	checkValidateForm();
 }
-function submit() {
+
+function getKey(obj) {
+	let result = '';
+	for (const key in obj) {
+		result += obj[key].value;
+	}
+	return result;
+}
+async function submit() {
 	if (formData.isValid.value) {
-		alert('EEEEEEEEEEEEe');
+		const url = 'https://dummyjson.com/auth/login';
+		// const email = formState.email;
+		const otp = getKey(formState.key);
+		const form = JSON.stringify({
+			// email,
+			otp,
+		});
+		// form.append('email', email);
+		// form.append('key', key);
+		console.log(form);
+		const { responses, error } = await ofetch(url, {
+			headers: {
+				Accept: 'application/json',
+			},
+			method: 'POST',
+			body: form,
+		});
+		console.log(responses, error);
 	}
 }
 </script>

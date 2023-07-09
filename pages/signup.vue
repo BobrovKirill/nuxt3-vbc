@@ -8,6 +8,7 @@ const {
 	isChangePassword,
 	changeVisiblePopup,
 	getPopupStatus,
+	resetState,
 } = useFormState();
 
 const infoData = {
@@ -29,6 +30,7 @@ const formData = {
 			type: 'text',
 			label: 'user name',
 			name: 'user',
+			placeholder: 'User name',
 			icon: 'user',
 			required: false,
 			valid: ref(null),
@@ -38,6 +40,7 @@ const formData = {
 			type: 'text',
 			label: 'email',
 			name: 'email',
+			placeholder: 'Email',
 			icon: 'email',
 			required: true,
 			valid: ref(null),
@@ -47,6 +50,7 @@ const formData = {
 			type: 'password',
 			label: 'password',
 			name: 'password',
+			placeholder: 'Password',
 			icon: 'password',
 			required: true,
 			valid: ref(null),
@@ -56,6 +60,7 @@ const formData = {
 			type: 'password',
 			label: 'confirm-password',
 			name: 'confirm-password',
+			placeholder: 'Confirm Password',
 			icon: 'password',
 			required: true,
 			valid: ref(null),
@@ -120,10 +125,10 @@ function submit() {
 }
 
 function popupAnswer(answer) {
+	changeVisiblePopup();
 	if (answer) {
+		resetState();
 		navigateTo('/');
-	} else {
-		changeVisiblePopup();
 	}
 }
 </script>

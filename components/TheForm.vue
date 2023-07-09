@@ -39,7 +39,12 @@ function showPopup() {
 			<FormHeader :header-data="props.formData.headerData" />
 			<fieldset
 				ref="inputs"
-				class="flex w-full flex-col items-center gap-2.5 px-3"
+				class="grid w-full justify-center"
+				:class="
+					props.formData.type === 'otp'
+						? 'otp-inputs  grid-cols-6 gap-x-5'
+						: 'grid-cols-[453px] gap-y-2.5'
+				"
 			>
 				<TheInput
 					v-for="inputItem in inputList"
@@ -64,4 +69,8 @@ function showPopup() {
 	</div>
 </template>
 
-<style></style>
+<style>
+.otp-inputs input {
+	@apply text-center text-[32px]/[24px];
+}
+</style>

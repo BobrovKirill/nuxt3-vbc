@@ -22,18 +22,21 @@ function showPopup() {
 		>
 			{{ props.footerData.button }}
 		</button>
-		<p class="text-center text-base text-[#71717A]">
+		<p
+			v-if="props.footerData.text"
+			class="text-center text-base text-[#71717A]"
+		>
 			{{ props.footerData.text }}
 
 			<NuxtLink
-				v-if="props.footerData.link.url !== '/'"
+				v-if="props.footerData.link.url !== '/' && props.footerData.link.url"
 				class="nuxt text-[#8098F9]"
 				:to="props.footerData.link.url"
 			>
 				{{ props.footerData.link.text }}
 			</NuxtLink>
 			<a
-				v-if="props.footerData.link.url === '/'"
+				v-if="props.footerData.link.url === '/' && props.footerData.link.url"
 				class="link text-[#8098F9]"
 				:href="props.footerData.link.url"
 				@click.prevent="showPopup"

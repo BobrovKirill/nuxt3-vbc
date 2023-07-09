@@ -11,25 +11,6 @@ const props: Props = defineProps({
 });
 const emits = defineEmits(['sendValue']);
 
-// Проверяем является ли инпут с типом пароль
-const isPasswordType = (text: string): boolean => text === 'password';
-
-// Если инпут с паролем оборачиваем в реф
-const inputType = isPasswordType(props.inputItem.type)
-	? ref<string | undefined>(props.inputItem.type)
-	: props.inputItem.type;
-
-const eyeIcon = ref(null);
-const input = ref();
-// меняем тип инпута при нажатии на кнопку
-function toggleShowPassword() {
-	const isPassword = isPasswordType(inputType.value);
-	inputType.value = isPassword ? 'text' : 'password';
-	eyeIcon.value.setAttribute(
-		'xlink:href',
-		`${isPassword ? '#open-eye' : '#close-eye'}`,
-	);
-}
 function sendEmit(input) {
 	const name = input.name;
 	const type = input.type;
@@ -37,11 +18,6 @@ function sendEmit(input) {
 	const required = input.required;
 	emits('sendValue', { name, type, value, required });
 }
-onMounted(() => {
-	if (!input.value) {
-		sendEmit(input.value);
-	}
-});
 function inputListener(event: { target: HTMLInputElement }) {
 	const target = event.target;
 	sendEmit(target);
@@ -50,35 +26,21 @@ function inputListener(event: { target: HTMLInputElement }) {
 
 <template>
 	<div class="label">
-		<label class="sr-only" :for="props.inputItem.name">{{
-			props.inputItem.label
-		}}</label>
-		<svg v-if="props.inputItem.icon" class="icon">
-			<use :xlink:href="`#${props.inputItem.icon}`" />
-		</svg>
+		<label class="sr-only" :for="props.inputItem.name">
+			{{ props.inputItem.label }}
+		</label>
 		<input
 			:id="props.inputItem.name"
-			ref="input"
 			class="input"
 			:type="inputType"
 			:data-invalid="props.inputItem.valid.value"
 			:name="props.inputItem.name"
 			:required="props.inputItem.required"
 			:autocomplete="props.inputItem.name"
-			max="1"
+			maxlength="1"
 			:placeholder="props.inputItem.placeholder"
 			@input="inputListener"
 		/>
-		<button
-			v-if="isPasswordType(props.inputItem.type)"
-			type="button"
-			class="eye"
-			@click="toggleShowPassword"
-		>
-			<svg class="mx-auto h-[30px] w-[30px]">
-				<use ref="eyeIcon" xlink:href="#close-eye" />
-			</svg>
-		</button>
 	</div>
 </template>
 

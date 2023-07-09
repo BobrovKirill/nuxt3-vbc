@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
 const { formState, isChangeValue } = useFormState();
@@ -21,6 +22,7 @@ const formData = {
 			type: 'text',
 			label: 'email',
 			name: 'email',
+			placeholder: 'Email',
 			icon: 'email',
 			required: true,
 			valid: ref(null),
@@ -30,6 +32,7 @@ const formData = {
 			type: 'password',
 			label: 'password',
 			name: 'password',
+			placeholder: 'Password',
 			icon: 'password',
 			required: true,
 			valid: ref(null),
@@ -59,9 +62,22 @@ function sendDataForm(data) {
 	});
 	checkValidateForm();
 }
-function submit() {
+async function submit() {
 	if (formData.isValid.value) {
-		navigateTo('/otp');
+		const url = 'https://dummyjson.com/auth/login';
+		const email = formState.email;
+		const password = formState.password;
+		const form = JSON.stringify({
+			email,
+			password,
+		});
+		console.log(form);
+		const responses = await ofetch(url, {
+			method: 'POST',
+			body: form,
+		});
+		console.log(responses);
+		// navigateTo('/otp');
 	}
 }
 </script>
