@@ -2,7 +2,7 @@
 import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
-const { formState, isChangeValue } = useFormState();
+const { formState, isChangeValue, changeAuthStatus } = useFormState();
 
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/login-img',
@@ -76,8 +76,9 @@ async function submit() {
 			method: 'POST',
 			body: form,
 		});
-		console.log(responses);
-		// navigateTo('/otp');
+		console.log('responses', responses);
+		changeAuthStatus();
+		navigateTo('/otp');
 	}
 }
 </script>

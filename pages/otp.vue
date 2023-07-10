@@ -3,6 +3,9 @@ import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
 const { formState } = useFormState();
+definePageMeta({
+	middleware: 'auth',
+});
 
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/otp-img',

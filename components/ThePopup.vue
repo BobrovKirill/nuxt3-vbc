@@ -10,8 +10,6 @@ function choiceYes() {
 function choiceNo() {
 	emits('popupAnswer', false);
 }
-
-console.log(props.isShowPopup);
 </script>
 
 <template>

@@ -4,17 +4,21 @@ import { ref } from 'vue';
 export const useFormState = defineStore('stateForm', () => {
 	const formState = ref({
 		user: '',
-		email: 'xxxxxx@mail.com',
+		email: '',
 		password: '',
 		'confirm-password': '',
 		check: false,
 		key: {},
 	});
 	const isShowPopup = ref(false);
+	const isAuth = ref(false);
 
-	const getPopupStatus = computed(() => {
-		return isShowPopup;
-	});
+	const getIsAuth = computed(() => isAuth.value);
+	const getPopupStatus = computed(() => isShowPopup);
+
+	const changeAuthStatus = () => {
+		isAuth.value = !isAuth.value;
+	};
 	const changeVisiblePopup = () => {
 		isShowPopup.value = !isShowPopup.value;
 	};
@@ -41,5 +45,7 @@ export const useFormState = defineStore('stateForm', () => {
 		getPopupStatus,
 		resetState,
 		resetStatePasswords,
+		getIsAuth,
+		changeAuthStatus,
 	};
 });
