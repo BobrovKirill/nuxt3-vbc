@@ -62,7 +62,7 @@ function sendDataForm(data) {
 	});
 	checkValidateForm();
 }
-async function submit() {
+async function onSubmit() {
 	if (formData.isValid.value) {
 		const url = 'https://dummyjson.com/auth/login';
 		const email = formState.email;
@@ -90,7 +90,7 @@ async function submit() {
 		<TheForm
 			:form-data="formData"
 			@send-data-form="sendDataForm"
-			@submit="submit"
+			@submit-emit="onSubmit"
 		/>
 		<TheInfo :img-src="infoData.infoImgPath" :img-alt="infoData.imgAlt">
 			<template #title>Connect with any device.</template>

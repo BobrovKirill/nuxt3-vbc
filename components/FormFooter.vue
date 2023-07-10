@@ -3,10 +3,8 @@ const props = defineProps({
 	footerData: Object,
 	isValid: Boolean,
 });
-const emits = defineEmits(['submit', 'showPopup']);
-function submit() {
-	emits('submit');
-}
+const emits = defineEmits(['showPopup']);
+
 function showPopup() {
 	emits('showPopup');
 }
@@ -14,12 +12,7 @@ function showPopup() {
 
 <template>
 	<div class="flex w-full flex-col items-center gap-5">
-		<button
-			type="submit"
-			class="submit-btn"
-			:disabled="!isValid"
-			@click.prevent="submit"
-		>
+		<button type="submit" class="submit-btn" :disabled="!isValid">
 			{{ props.footerData.button }}
 		</button>
 		<p

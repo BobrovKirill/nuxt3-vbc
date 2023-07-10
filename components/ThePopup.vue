@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import TheButton from '~/components/UI/TheButton.vue';
+
 const props = defineProps({
 	isShowPopup: Boolean,
 });
@@ -24,18 +26,12 @@ function choiceNo() {
 				В случае перехода на страницу авторизации данные из формы регистрации
 				будут утеряны
 			</p>
-			<button
-				class="rounded-[10px] bg-[#8098F9] p-2.5 font-inter text-xl text-[#ffffff]"
-				@click="choiceYes"
-			>
+			<TheButton :type="'button'" :disabled="false" @button-click="choiceYes">
 				ок
-			</button>
-			<button
-				class="rounded-[10px] bg-[#8098F9] p-2.5 font-inter text-xl text-[#ffffff]"
-				@click="choiceNo"
-			>
+			</TheButton>
+			<TheButton :type="'button'" :disabled="false" @button-click="choiceNo">
 				нет
-			</button>
+			</TheButton>
 		</div>
 	</div>
 </template>

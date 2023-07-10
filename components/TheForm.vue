@@ -7,7 +7,7 @@ import TheCheckbox from '~/components/UI/TheCheckbox.vue';
 const props = defineProps({
 	formData: Object,
 });
-const emits = defineEmits(['sendDataForm', 'submit', 'showPopup']);
+const emits = defineEmits(['sendDataForm', 'submitEmit', 'showPopup']);
 // TODO переделать на Map
 const result = {};
 
@@ -22,8 +22,9 @@ function getValue(data) {
 	result[name] = { type, value, required };
 	emits('sendDataForm', result);
 }
-function submit() {
-	emits('submit');
+function onSubmit(e) {
+	console.log(e);
+	emits('submitEmit');
 }
 function showPopup() {
 	emits('showPopup');
@@ -35,6 +36,7 @@ function showPopup() {
 		<form
 			action="#"
 			class="flex w-full max-w-[477px] flex-col items-center gap-[25px]"
+			@submit.prevent="onSubmit"
 		>
 			<FormHeader :header-data="props.formData.headerData" />
 			<fieldset
@@ -63,7 +65,6 @@ function showPopup() {
 				:footer-data="props.formData.footerData"
 				:is-valid="props.formData.isValid.value"
 				@show-popup="showPopup"
-				@submit="submit"
 			/>
 		</form>
 	</div>
