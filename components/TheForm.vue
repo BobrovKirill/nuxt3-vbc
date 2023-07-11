@@ -22,8 +22,7 @@ function getValue(data) {
 	result[name] = { type, value, required };
 	emits('sendDataForm', result);
 }
-function onSubmit(e) {
-	console.log(e);
+function onSubmit() {
 	emits('submitEmit');
 }
 function showPopup() {
@@ -44,7 +43,7 @@ function showPopup() {
 				class="grid w-full justify-center"
 				:class="
 					props.formData.type === 'otp'
-						? 'otp-inputs  grid-cols-6 gap-x-5'
+						? 'otp-inputs [484px]  grid-cols-6 gap-x-5'
 						: 'grid-cols-[453px] gap-y-2.5'
 				"
 			>

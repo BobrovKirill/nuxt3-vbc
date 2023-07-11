@@ -62,21 +62,32 @@ function sendDataForm(data) {
 	});
 	checkValidateForm();
 }
+
+// username: kminchelle,
+// password: 0lelplR,
 async function onSubmit() {
 	if (formData.isValid.value) {
 		const url = 'https://dummyjson.com/auth/login';
-		const email = formState.email;
-		const password = formState.password;
+		// const username = formState.email;
+		// const password = formState.password;
 		const form = JSON.stringify({
-			email,
-			password,
+			username: 'kminchelle',
+			password: '0lelplR',
 		});
-		console.log(form);
-		const responses = await ofetch(url, {
-			method: 'POST',
-			body: form,
-		});
-		console.log('responses', responses);
+		try {
+			const responses = await ofetch(url, {
+				headers: { 'Content-Type': 'application/json' },
+				method: 'POST',
+				body: form,
+			});
+			toReadirect(responses);
+		} catch (err) {
+			console.log('error ->', err);
+		}
+	}
+
+	function toReadirect(resposes) {
+		formState.email = resposes.email;
 		changeAuthStatus();
 		navigateTo('/otp');
 	}

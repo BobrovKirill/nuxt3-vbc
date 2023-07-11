@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ofetch } from 'ofetch';
 import { useFormState } from '~/store';
 import { validRequiredCounter, isValidate } from '~/utils';
 import ThePopup from '~/components/ThePopup.vue';
@@ -118,9 +119,28 @@ function sendDataForm(data) {
 	});
 	checkValidateForm();
 }
-function submit() {
+async function submit() {
 	if (formData.isValid.value) {
-		alert('EEEEEEEEEEEEe');
+		const url = 'https://dummyjson.com/users/add';
+		const form = JSON.stringify({
+			username: formState.user,
+			email: formState.email,
+			password: formState.password,
+			check: formState.check,
+		});
+		try {
+			await ofetch(url, {
+				headers: { 'Content-Type': 'application/json' },
+				method: 'POST',
+				body: form,
+			});
+			toReadirect();
+		} catch (err) {
+			console.log('error ->', err);
+		}
+	}
+	function toReadirect() {
+		navigateTo('/');
 	}
 }
 

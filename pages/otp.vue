@@ -114,24 +114,21 @@ function getKey(obj) {
 }
 async function submit() {
 	if (formData.isValid.value) {
-		const url = 'https://dummyjson.com/auth/login';
-		// const email = formState.email;
-		const otp = getKey(formState.key);
+		const url = 'https://dummyjson.com/users/add';
 		const form = JSON.stringify({
-			// email,
-			otp,
+			email: formState.email,
+			key: getKey(formState.key),
 		});
-		// form.append('email', email);
-		// form.append('key', key);
-		console.log(form);
-		const { responses, error } = await ofetch(url, {
-			headers: {
-				Accept: 'application/json',
-			},
-			method: 'POST',
-			body: form,
-		});
-		console.log(responses, error);
+		try {
+			await ofetch(url, {
+				headers: { 'Content-Type': 'application/json' },
+				method: 'POST',
+				body: form,
+			});
+			alert('OTP key sent successfully');
+		} catch (err) {
+			console.log('error ->', err);
+		}
 	}
 }
 </script>
