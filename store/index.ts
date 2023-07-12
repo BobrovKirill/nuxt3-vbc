@@ -10,23 +10,29 @@ export const useFormState = defineStore('stateForm', () => {
 		check: false,
 		key: {},
 	});
-	const isShowPopup = ref(false);
+	const isСonfirmSignupReset = ref(true);
+	const isPopupStatus = ref(false);
 	const isAuth = ref(false);
 
 	const getIsAuth = computed(() => isAuth.value);
-	const getPopupStatus = computed(() => isShowPopup);
+	const getPopupStatus = computed(() => isPopupStatus);
+	const getСonfirmSignupReset = computed(() => isСonfirmSignupReset);
 
 	const changeAuthStatus = () => {
 		isAuth.value = !isAuth.value;
 	};
 	const changeVisiblePopup = () => {
-		isShowPopup.value = !isShowPopup.value;
+		isPopupStatus.value = !isPopupStatus.value;
+	};
+	const changeСonfirmSignupReset = () => {
+		isСonfirmSignupReset.value = !isСonfirmSignupReset.value;
 	};
 	const resetState = () => {
 		formState.value.user = '';
 		formState.value.password = '';
 		formState.value['confirm-password'] = '';
 		formState.value.check = false;
+		formState.value.key = {};
 	};
 	const resetStatePasswords = () => {
 		formState.value.password = '';
@@ -39,13 +45,16 @@ export const useFormState = defineStore('stateForm', () => {
 	return {
 		isChangePassword,
 		formState,
-		isShowPopup,
-		changeVisiblePopup,
+		isСonfirmSignupReset,
+		getСonfirmSignupReset,
 		isChangeValue,
-		getPopupStatus,
+		changeСonfirmSignupReset,
 		resetState,
 		resetStatePasswords,
 		getIsAuth,
 		changeAuthStatus,
+		isPopupStatus,
+		changeVisiblePopup,
+		getPopupStatus,
 	};
 });

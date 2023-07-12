@@ -34,7 +34,8 @@ function showPopup() {
 	<div class="flex items-center justify-center bg-white p-4">
 		<form
 			action="#"
-			class="flex w-full max-w-[477px] flex-col items-center gap-[25px]"
+			class="flex w-full flex-col items-center gap-[25px]"
+			:class="props.formData.type === 'otp' ? 'max-w-[484px]' : 'max-w-[477px]'"
 			@submit.prevent="onSubmit"
 		>
 			<FormHeader :header-data="props.formData.headerData" />
@@ -43,7 +44,7 @@ function showPopup() {
 				class="grid w-full justify-center"
 				:class="
 					props.formData.type === 'otp'
-						? 'otp-inputs [484px]  grid-cols-6 gap-x-5'
+						? 'otp-inputs grid-cols-6 gap-x-5'
 						: 'grid-cols-[453px] gap-y-2.5'
 				"
 			>

@@ -64,8 +64,7 @@ function inputListener(event: { target: HTMLInputElement }) {
 			:data-invalid="props.inputItem.valid.value"
 			:name="props.inputItem.name"
 			:required="props.inputItem.required"
-			:autocomplete="props.inputItem.name"
-			max="1"
+			:autocomplete="props.inputItem.autocomplete"
 			:placeholder="props.inputItem.placeholder"
 			@input="inputListener"
 		/>

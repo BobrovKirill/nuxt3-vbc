@@ -3,6 +3,9 @@ import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
 const { formState, isChangeValue, changeAuthStatus } = useFormState();
+definePageMeta({
+	middleware: ['signup'],
+});
 
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/login-img',
@@ -23,6 +26,7 @@ const formData = {
 			label: 'email',
 			name: 'email',
 			placeholder: 'Email',
+			autocomplete: 'email',
 			icon: 'email',
 			required: true,
 			valid: ref(null),
@@ -33,6 +37,7 @@ const formData = {
 			label: 'password',
 			name: 'password',
 			placeholder: 'Password',
+			autocomplete: 'current-password',
 			icon: 'password',
 			required: true,
 			valid: ref(null),

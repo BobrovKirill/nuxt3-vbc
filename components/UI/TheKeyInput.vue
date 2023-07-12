@@ -22,6 +22,7 @@ function inputListener(event: { target: HTMLInputElement }) {
 	const target = event.target;
 	sendEmit(target);
 }
+const kek = '';
 </script>
 
 <template>
@@ -31,12 +32,13 @@ function inputListener(event: { target: HTMLInputElement }) {
 		</label>
 		<input
 			:id="props.inputItem.name"
+			v-model="kek"
 			class="input"
 			:type="inputType"
 			:data-invalid="props.inputItem.valid.value"
 			:name="props.inputItem.name"
 			:required="props.inputItem.required"
-			:autocomplete="props.inputItem.name"
+			:autocomplete="props.inputItem.autocomplete"
 			maxlength="1"
 			:placeholder="props.inputItem.placeholder"
 			@input="inputListener"

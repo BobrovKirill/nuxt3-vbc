@@ -2,9 +2,9 @@
 import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
-const { formState } = useFormState();
+const { formState, resetState } = useFormState();
 definePageMeta({
-	middleware: 'auth',
+	middleware: 'otp',
 });
 
 const infoData = {
@@ -20,65 +20,71 @@ const formData = {
 		text: 'Sent OTP on',
 		email: formState.email,
 		subtitle: '',
-		link: '/',
+		link: '/signup',
 	},
 	inputsData: [
 		{
 			id: '1',
-			type: 'number',
+			type: 'text',
 			label: 'key number 1',
 			name: 'key1',
 			placeholder: '-',
+			autocomplete: 'off',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '2',
-			type: 'number',
+			type: 'text',
 			label: 'key number 2',
 			name: 'key2',
 			placeholder: '-',
+			autocomplete: 'off',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '3',
-			type: 'number',
+			type: 'text',
 			label: 'key number 3',
 			name: 'key3',
 			placeholder: '-',
+			autocomplete: 'off',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '4',
-			type: 'number',
+			type: 'text',
 			label: 'key number 4',
 			name: 'key4',
 			placeholder: '-',
+			autocomplete: 'off',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '5',
-			type: 'number',
+			type: 'text',
 			label: 'key number 5',
 			name: 'key5',
 			placeholder: '-',
+			autocomplete: 'off',
 			icon: '',
 			required: true,
 			valid: ref(null),
 		},
 		{
 			id: '6',
-			type: 'number',
+			type: 'text',
 			label: 'key number 6',
 			name: 'key6',
 			placeholder: '-',
+			autocomplete: 'off',
 			icon: '',
 			required: true,
 			valid: ref(null),
@@ -101,11 +107,10 @@ function sendDataForm(data) {
 		}
 	});
 	formState.key = { ...data };
-	console.log(formState.key);
 	checkValidateForm();
 }
 
-function getKey(obj) {
+function getKey(obj): string {
 	let result = '';
 	for (const key in obj) {
 		result += obj[key].value;
@@ -126,6 +131,7 @@ async function submit() {
 				body: form,
 			});
 			alert('OTP key sent successfully');
+			resetState();
 		} catch (err) {
 			console.log('error ->', err);
 		}

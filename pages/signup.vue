@@ -10,8 +10,12 @@ const {
 	changeVisiblePopup,
 	getPopupStatus,
 	resetState,
+	// getСonfirmSignupReset,
+	changeСonfirmSignupReset,
 } = useFormState();
-
+definePageMeta({
+	middleware: 'signup',
+});
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/signup-img',
 	imgAlt: 'изображение связей',
@@ -32,6 +36,7 @@ const formData = {
 			label: 'user name',
 			name: 'user',
 			placeholder: 'User name',
+			autocomplete: 'username',
 			icon: 'user',
 			required: false,
 			valid: ref(null),
@@ -42,6 +47,7 @@ const formData = {
 			label: 'email',
 			name: 'email',
 			placeholder: 'Email',
+			autocomplete: 'email',
 			icon: 'email',
 			required: true,
 			valid: ref(null),
@@ -52,6 +58,7 @@ const formData = {
 			label: 'password',
 			name: 'password',
 			placeholder: 'Password',
+			autocomplete: 'off',
 			icon: 'password',
 			required: true,
 			valid: ref(null),
@@ -62,6 +69,7 @@ const formData = {
 			label: 'confirm-password',
 			name: 'confirm-password',
 			placeholder: 'Confirm Password',
+			autocomplete: 'off',
 			icon: 'password',
 			required: true,
 			valid: ref(null),
@@ -139,18 +147,22 @@ async function submit() {
 			console.log('error ->', err);
 		}
 	}
-	function toReadirect() {
-		navigateTo('/');
-	}
+}
+function toReadirect() {
+	navigateTo('/');
 }
 
 function popupAnswer(answer) {
-	changeVisiblePopup();
 	if (answer) {
 		resetState();
-		navigateTo('/');
+		changeСonfirmSignupReset();
+		changeVisiblePopup();
+		toReadirect();
+	} else {
+		changeVisiblePopup();
 	}
 }
+onMounted(() => changeСonfirmSignupReset());
 </script>
 
 <template>

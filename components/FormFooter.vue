@@ -3,11 +3,11 @@ const props = defineProps({
 	footerData: Object,
 	isValid: Boolean,
 });
-const emits = defineEmits(['showPopup']);
-
-function showPopup() {
-	emits('showPopup');
-}
+// const emits = defineEmits(['showPopup']);
+//
+// function showPopup() {
+// 	emits('showPopup');
+// }
 </script>
 
 <template>
@@ -21,21 +21,17 @@ function showPopup() {
 		>
 			{{ props.footerData.text }}
 
-			<NuxtLink
-				v-if="props.footerData.link.url !== '/' && props.footerData.link.url"
-				class="nuxt text-[#8098F9]"
-				:to="props.footerData.link.url"
-			>
+			<NuxtLink class="nuxt text-[#8098F9]" :to="props.footerData.link.url">
 				{{ props.footerData.link.text }}
 			</NuxtLink>
-			<a
-				v-if="props.footerData.link.url === '/' && props.footerData.link.url"
-				class="link text-[#8098F9]"
-				:href="props.footerData.link.url"
-				@click.prevent="showPopup"
-			>
-				{{ props.footerData.link.text }}
-			</a>
+			<!--			<a-->
+			<!--				v-if="props.footerData.link.url === '/' && props.footerData.link.url"-->
+			<!--				class="link text-[#8098F9]"-->
+			<!--				:href="props.footerData.link.url"-->
+			<!--				@click.prevent="showPopup"-->
+			<!--			>-->
+			<!--				{{ props.footerData.link.text }}-->
+			<!--			</a>-->
 		</p>
 	</div>
 </template>
