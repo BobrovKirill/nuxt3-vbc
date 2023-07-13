@@ -1,6 +1,7 @@
 <script setup lang="ts">
 type Props = {
 	inputItem: {
+		label: string;
 		type: string;
 		value: string;
 	};
@@ -22,7 +23,8 @@ function inputListener(event: { target: HTMLInputElement }) {
 	const target = event.target;
 	sendEmit(target);
 }
-const kek = '';
+const kek = '1';
+console.log(kek);
 </script>
 
 <template>

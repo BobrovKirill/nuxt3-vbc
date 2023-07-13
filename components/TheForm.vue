@@ -3,6 +3,7 @@ import FormHeader from '~/components/FormHeader.vue';
 import FormFooter from '~/components/FormFooter.vue';
 import TheInput from '~/components/UI/TheInput.vue';
 import TheCheckbox from '~/components/UI/TheCheckbox.vue';
+import TheKeyInput from '~/components/UI/TheKeyInput.vue';
 
 const props = defineProps({
 	formData: Object,
@@ -17,6 +18,10 @@ const inputList = props.formData.inputsData.filter(
 const checkboxList = props.formData.inputsData.filter(
 	(input) => input.type === 'checkbox',
 );
+const keysxList = props.formData.inputsData.filter((input) => {
+	return input.name.includes('key');
+});
+console.log(keysxList);
 function getValue(data) {
 	const { name, type, value, required } = data;
 	result[name] = { type, value, required };
@@ -50,14 +55,20 @@ function showPopup() {
 			>
 				<TheInput
 					v-for="inputItem in inputList"
-					:key="inputItem.key"
+					:key="inputItem.id"
 					:input-item="inputItem"
 					@send-value="getValue"
 				/>
 				<TheCheckbox
 					v-for="inputItem in checkboxList"
-					:key="inputItem.key"
+					:key="inputItem.id"
 					:input-item="inputItem"
+					@send-value="getValue"
+				/>
+				<TheKeyInput
+					v-for="keyInput in keysxList"
+					:key="keyInput.id"
+					:input-item="keyInput"
 					@send-value="getValue"
 				/>
 			</fieldset>

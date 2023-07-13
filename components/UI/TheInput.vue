@@ -1,6 +1,7 @@
 <script setup lang="ts">
 type Props = {
 	inputItem: {
+		label: string;
 		type: string;
 		value: string;
 	};
