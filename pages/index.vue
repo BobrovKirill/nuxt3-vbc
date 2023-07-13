@@ -4,7 +4,7 @@ import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
 const { formState, isChangeValue, changeAuthStatus } = useFormState();
 definePageMeta({
-	middleware: ['signup'],
+	middleware: 'signin',
 });
 
 const infoData = {

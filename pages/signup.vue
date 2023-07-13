@@ -162,7 +162,7 @@ function popupAnswer(answer) {
 		changeVisiblePopup();
 	}
 }
-onMounted(() => changeСonfirmSignupReset());
+// onMounted(() => changeСonfirmSignupReset());
 </script>
 
 <template>

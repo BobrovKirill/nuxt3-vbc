@@ -21,7 +21,6 @@ const checkboxList = props.formData.inputsData.filter(
 const keysxList = props.formData.inputsData.filter((input) => {
 	return input.name.includes('key');
 });
-console.log(keysxList);
 function getValue(data) {
 	const { name, type, value, required } = data;
 	result[name] = { type, value, required };
