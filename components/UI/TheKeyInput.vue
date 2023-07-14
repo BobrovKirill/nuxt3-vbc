@@ -24,6 +24,14 @@ const props: Props = defineProps({
 // 	sendEmit(target);
 // }
 const kek = ref('');
+const getKek = computed(() => {
+	const value = kek.value;
+	if (/\D/g.test(value)) {
+		return kek.value;
+	} else {
+		return (kek.value = '');
+	}
+});
 </script>
 
 <template>
@@ -33,7 +41,7 @@ const kek = ref('');
 		</label>
 		<input
 			:id="props.inputItem.name"
-			v-model="kek"
+			v-model="getKek"
 			class="input"
 			:type="inputType"
 			:data-invalid="props.inputItem.valid.value"
