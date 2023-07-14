@@ -10,7 +10,6 @@ const {
 	changeVisiblePopup,
 	getPopupStatus,
 	resetState,
-	// getСonfirmSignupReset,
 	changeСonfirmSignupReset,
 } = useFormState();
 definePageMeta({
@@ -163,6 +162,7 @@ function popupAnswer(answer) {
 	}
 }
 // onMounted(() => changeСonfirmSignupReset());
+onMounted(() => console.log(getPopupStatus));
 </script>
 
 <template>

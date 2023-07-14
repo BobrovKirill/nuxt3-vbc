@@ -2,8 +2,7 @@ import { useFormState } from '~/store';
 const { getIsAuth } = useFormState();
 
 export default defineNuxtRouteMiddleware((to) => {
-	console.log('otp');
-	if (to.path === '/otp' && !getIsAuth) {
+	if (to.path === '/otp' && !getIsAuth.value) {
 		return navigateTo('/');
 	}
 });

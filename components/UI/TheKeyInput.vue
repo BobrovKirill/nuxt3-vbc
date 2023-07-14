@@ -10,21 +10,20 @@ type Props = {
 const props: Props = defineProps({
 	inputItem: Object,
 });
-const emits = defineEmits(['sendValue']);
+// const emits = defineEmits(['sendValue']);
 
-function sendEmit(input) {
-	const name = input.name;
-	const type = input.type;
-	const value = input.value;
-	const required = input.required;
-	emits('sendValue', { name, type, value, required });
-}
-function inputListener(event: { target: HTMLInputElement }) {
-	const target = event.target;
-	sendEmit(target);
-}
-const kek = '1';
-console.log(kek);
+// function sendEmit(input) {
+// 	const name = input.name;
+// 	const type = input.type;
+// 	const value = input.value;
+// 	const required = input.required;
+// 	emits('sendValue', { name, type, value, required });
+// }
+// function inputListener(event: { target: HTMLInputElement }) {
+// 	const target = event.target;
+// 	sendEmit(target);
+// }
+const kek = ref('');
 </script>
 
 <template>
@@ -43,7 +42,6 @@ console.log(kek);
 			:autocomplete="props.inputItem.autocomplete"
 			maxlength="1"
 			:placeholder="props.inputItem.placeholder"
-			@input="inputListener"
 		/>
 	</div>
 </template>

@@ -4,7 +4,7 @@ import TheButton from '~/components/UI/TheButton.vue';
 const props = defineProps({
 	isShowPopup: Boolean,
 });
-const { isShowPopup } = toRefs(props);
+// const { isShowPopup } = toRefs(props);
 const emits = defineEmits(['popupAnswer']);
 
 function choiceYes() {
@@ -13,11 +13,12 @@ function choiceYes() {
 function choiceNo() {
 	emits('popupAnswer', false);
 }
+onMounted(() => console.log(props.isShowPopup));
 </script>
 
 <template>
 	<div
-		v-if="isShowPopup"
+		v-if="props.isShowPopup"
 		class="fixed z-50 flex h-screen w-screen items-center justify-center bg-black/[0.8] p-4"
 	>
 		<div
