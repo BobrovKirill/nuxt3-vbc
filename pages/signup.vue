@@ -98,9 +98,12 @@ const formData = {
 // прокидываем props и emits
 provide('formData', { formData, onSubmit, sendDataForm, showPopup });
 
+// Проверяем валидна ли форма, то есть валидны ли все required инпуты
 function checkValidateForm() {
 	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
+
+// Валидируем пароль и подтвердите пароль, в случае если был изменен пароль и то повторно проверяем и валидацию повторите пароль
 function validatePasswords(name, value) {
 	if (name === 'confirm-password') {
 		return isChangePassword();
@@ -114,6 +117,8 @@ function validatePasswords(name, value) {
 		return isValidate(name, value);
 	}
 }
+
+// делим инпуты пароль или подтвердите пароль от других
 function runValidate(name, value) {
 	const isPasswordType = name.includes('password');
 	if (isPasswordType) {
@@ -122,6 +127,8 @@ function runValidate(name, value) {
 		return isValidate(name, value);
 	}
 }
+
+// принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
 function sendDataForm(data) {
 	formData.inputsData.forEach((input) => {
 		if (!isChangeValue(input.name, data[input.name]?.value)) {
@@ -133,6 +140,8 @@ function sendDataForm(data) {
 	});
 	checkValidateForm();
 }
+
+// fetch запрос
 async function onSubmit() {
 	if (formData.isValid.value) {
 		const url = 'https://dummyjson.com/users/add';
@@ -148,24 +157,28 @@ async function onSubmit() {
 				method: 'POST',
 				body: form,
 			});
-			toReadirect();
+			toRedirect();
 		} catch (err) {
 			console.log('error ->', err);
 		}
 	}
 }
-function toReadirect() {
+function toRedirect() {
 	navigateTo('/');
 }
+
+// Показываем попап
 function showPopup() {
 	changeVisiblePopup();
 }
+
+// Ждем подтверждения от попапа и редиректим или просто закрываем его
 function popupAnswer(answer) {
 	if (answer) {
 		resetState();
 		changeСonfirmSignupReset();
 		changeVisiblePopup();
-		toReadirect();
+		toRedirect();
 	} else {
 		changeVisiblePopup();
 	}

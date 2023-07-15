@@ -103,8 +103,10 @@ function checkValidateForm() {
 	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
 
+// валидируем инпут
 const runValidate = (name, value) => isValidate(name, value);
 
+// принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
 function sendDataForm(data) {
 	formData.inputsData.forEach((input) => {
 		if (data[input.name]?.required) {
@@ -115,6 +117,7 @@ function sendDataForm(data) {
 	checkValidateForm();
 }
 
+// преобразуем в строку все 6 ключей кода
 function getKey(obj): string {
 	let result = '';
 	for (const key in obj) {
@@ -122,6 +125,8 @@ function getKey(obj): string {
 	}
 	return result;
 }
+
+// fetch запрос
 async function onSubmit() {
 	if (formData.isValid.value) {
 		const url = 'https://dummyjson.com/users/add';
