@@ -1,16 +1,16 @@
 import { useFormState } from '~/store';
-const { getСonfirmSignupReset, changeСonfirmSignupReset, changeVisiblePopup } =
+const { getConfirmResetSignup, toggleConfirmResetSignup, toggleVisiblePopup } =
 	useFormState();
 
 export default defineNuxtRouteMiddleware((to, from) => {
 	const isFromSignup = to.path === '/' && from.path === '/signup';
 
 	if (isFromSignup) {
-		if (!getСonfirmSignupReset.value) {
-			changeVisiblePopup();
+		if (!getConfirmResetSignup.value) {
+			toggleVisiblePopup();
 			return abortNavigation();
 		} else {
-			changeСonfirmSignupReset();
+			toggleConfirmResetSignup();
 		}
 	}
 });

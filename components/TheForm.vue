@@ -8,6 +8,7 @@ import TheKeyInput from '~/components/UI/TheKeyInput.vue';
 const { formData, onSubmit, sendDataForm, showPopup } = inject('formData');
 // TODO переделать на Map
 const result = {};
+const form = ref(null);
 
 const inputList = formData.inputsData.filter(
 	(input) => input.type !== 'checkbox' && input.type !== 'number',
@@ -23,15 +24,20 @@ function getValue(data) {
 	result[name] = { type, value, required };
 	sendDataForm(result);
 }
+function submit() {
+	form.value.reset();
+	onSubmit();
+}
 </script>
 
 <template>
 	<div class="flex items-center justify-center bg-white p-4">
 		<form
+			ref="form"
 			action="#"
 			class="flex w-full flex-col items-center gap-[25px]"
 			:class="formData.type === 'otp' ? 'max-w-[484px]' : 'max-w-[477px]'"
-			@submit.prevent="onSubmit"
+			@submit.prevent="submit"
 		>
 			<FormHeader :header-data="formData.headerData" />
 			<fieldset

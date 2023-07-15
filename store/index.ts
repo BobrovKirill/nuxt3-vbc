@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-type FormState = {
+interface FormState {
 	user: string;
 	email: string;
 	password: string;
 	'confirm-password': string;
 	check: boolean;
 	key: {};
-};
+}
 
 export const useFormState = defineStore('stateForm', () => {
-	const formState = ref<FormState>({
+	const formState: FormState = ref({
 		user: '',
 		email: '',
 		password: '',

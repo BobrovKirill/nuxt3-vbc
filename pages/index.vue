@@ -2,7 +2,7 @@
 import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
-const { formState, isChangeValue, changeAuthStatus } = useFormState();
+const { formState, isChangeValue, toggleAuthStatus } = useFormState();
 
 // регистрируем middleware
 definePageMeta({
@@ -79,7 +79,7 @@ function sendDataForm(data) {
 // если response ok, обновляем email из response'a и редиректим
 function toRedirect(response) {
 	formState.email = response.email;
-	changeAuthStatus();
+	toggleAuthStatus();
 	navigateTo('/otp');
 }
 

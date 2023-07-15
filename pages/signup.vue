@@ -7,10 +7,10 @@ const {
 	formState,
 	isChangeValue,
 	isChangePassword,
-	changeVisiblePopup,
+	toggleVisiblePopup,
 	getPopupStatus,
 	resetState,
-	changeСonfirmSignupReset,
+	toggleConfirmResetSignup,
 } = useFormState();
 
 // регистрируем middleware
@@ -141,6 +141,10 @@ function sendDataForm(data) {
 	checkValidateForm();
 }
 
+function toRedirect() {
+	navigateTo('/');
+}
+
 // fetch запрос
 async function onSubmit() {
 	if (formData.isValid.value) {
@@ -163,9 +167,6 @@ async function onSubmit() {
 		}
 	}
 }
-function toRedirect() {
-	navigateTo('/');
-}
 
 // Показываем попап
 function showPopup() {
@@ -176,11 +177,11 @@ function showPopup() {
 function popupAnswer(answer) {
 	if (answer) {
 		resetState();
-		changeСonfirmSignupReset();
-		changeVisiblePopup();
+		toggleConfirmResetSignup();
+		toggleVisiblePopup();
 		toRedirect();
 	} else {
-		changeVisiblePopup();
+		toggleVisiblePopup();
 	}
 }
 </script>

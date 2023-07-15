@@ -33,9 +33,7 @@ export default defineNuxtConfig({
 	},
 	css: ['~/style.css'],
 	modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
-	imports: {
-		autoImport: ['defineStore', ['defineStore', 'definePiniaStore']],
-	},
+	imports: {},
 	vite: {
 		plugins: [eslint()],
 	},

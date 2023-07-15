@@ -4,6 +4,12 @@ type Props = {
 		label: string;
 		type: string;
 		value: string;
+		icon: string;
+		name: string;
+		placeholder: string;
+		required: boolean;
+		autocomplete: string;
+		valid: { value: boolean };
 	};
 };
 

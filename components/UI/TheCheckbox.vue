@@ -1,8 +1,13 @@
 <script setup lang="ts">
 type Props = {
 	inputItem: {
+		label: string;
 		type: string;
 		value: string;
+		name: string;
+		required: boolean;
+		valid: { value: boolean };
+		links: [link: { id: number; text: string; url: string }];
 	};
 };
 
@@ -44,7 +49,12 @@ function sendEmit(input) {
 		<span class="checkbox" />
 		<span>
 			{{ props.inputItem.label }}
-			<a v-for="link in props.inputItem.links" :key="link.id" :href="link.url">
+			<a
+				v-for="link in props.inputItem.links"
+				:key="link.id"
+				:href="link.url"
+				class="text-[#8098F9]"
+			>
 				{{ link.text }}
 			</a>
 		</span>
