@@ -33,7 +33,7 @@ watch(keyValue, (newValue, oldValue) => {
 		keyValue.value = newValue.at(-1);
 	}
 	keyInput.value.querySelector('input').blur();
-	nextKeyInput.value.querySelector('input').focus();
+	nextKeyInput.value?.querySelector('input').focus();
 });
 onMounted(() => {
 	nextKeyInput.value = keyInput.value.nextElementSibling;
@@ -49,7 +49,7 @@ onMounted(() => {
 			:id="props.inputItem.name"
 			v-model="keyValue"
 			class="input"
-			:type="inputType"
+			:type="props.inputItem.type"
 			:data-invalid="props.inputItem.valid.value"
 			:name="props.inputItem.name"
 			:required="props.inputItem.required"

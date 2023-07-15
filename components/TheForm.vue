@@ -13,13 +13,13 @@ const emits = defineEmits(['sendDataForm', 'submitEmit', 'showPopup']);
 const result = {};
 
 const inputList = props.formData.inputsData.filter(
-	(input) => input.type !== 'checkbox',
+	(input) => input.type !== 'checkbox' && input.type !== 'number',
 );
 const checkboxList = props.formData.inputsData.filter(
 	(input) => input.type === 'checkbox',
 );
-const keysxList = props.formData.inputsData.filter((input) => {
-	return input.name.includes('key');
+const keysList = props.formData.inputsData.filter((input) => {
+	return input.type === 'number';
 });
 function getValue(data) {
 	const { name, type, value, required } = data;
@@ -65,7 +65,7 @@ function showPopup() {
 					@send-value="getValue"
 				/>
 				<TheKeyInput
-					v-for="keyInput in keysxList"
+					v-for="keyInput in keysList"
 					:key="keyInput.id"
 					:input-item="keyInput"
 					@send-value="getValue"
