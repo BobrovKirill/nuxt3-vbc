@@ -3,15 +3,17 @@ import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
 const { formState, resetState } = useFormState();
+
+// регистрируем middleware
 definePageMeta({
 	middleware: 'otp',
 });
 
+// Данные страницы otp
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/otp-img',
 	imgAlt: 'изображение человек с ноутбуком',
 };
-
 const formData = {
 	type: 'otp',
 	isValid: ref(false),
@@ -94,6 +96,9 @@ const formData = {
 		button: 'SUBMIT',
 	},
 };
+
+// прокидываем props и emits
+provide('formData', { formData, onSubmit, sendDataForm });
 function checkValidateForm() {
 	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
@@ -117,7 +122,7 @@ function getKey(obj): string {
 	}
 	return result;
 }
-async function submit() {
+async function onSubmit() {
 	if (formData.isValid.value) {
 		const url = 'https://dummyjson.com/users/add';
 		const form = JSON.stringify({
@@ -143,11 +148,7 @@ async function submit() {
 	<div
 		class="grid-rows-[1fr, auto] grid h-full grid-cols-1 xl:grid-cols-2 xl:grid-rows-1"
 	>
-		<TheForm
-			:form-data="formData"
-			@send-data-form="sendDataForm"
-			@submit="submit"
-		/>
+		<TheForm />
 		<TheInfo :img-src="infoData.infoImgPath" :img-alt="infoData.imgAlt">
 			<template #title>It's just OTP verification</template>
 			<template #text>

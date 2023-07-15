@@ -3,15 +3,17 @@ import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
 const { formState, isChangeValue, changeAuthStatus } = useFormState();
+
+// регистрируем middleware
 definePageMeta({
 	middleware: 'signin',
 });
 
+// Данные страницы signin
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/login-img',
 	imgAlt: 'изображение гаджетов',
 };
-
 const formData = {
 	type: 'signin',
 	isValid: ref(false),
@@ -50,12 +52,18 @@ const formData = {
 	},
 };
 
+// прокидываем props и emits
+provide('formData', { formData, onSubmit, sendDataForm });
+
+// Проверяем валидна ли форма, то есть валидны ли все required инпуты
 function checkValidateForm() {
 	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
 
+// валидируем инпут
 const runValidate = (name, value) => isValidate(name, value);
 
+// принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
 function sendDataForm(data) {
 	formData.inputsData.forEach((input) => {
 		if (!isChangeValue(input.name, data[input.name]?.value)) {
@@ -68,8 +76,7 @@ function sendDataForm(data) {
 	checkValidateForm();
 }
 
-// username: kminchelle,
-// password: 0lelplR,
+// fetch запрос - для теста -> username: kminchelle / password: 0lelplR
 async function onSubmit() {
 	if (formData.isValid.value) {
 		const url = 'https://dummyjson.com/auth/login';
@@ -80,19 +87,20 @@ async function onSubmit() {
 			password: '0lelplR',
 		});
 		try {
-			const responses = await ofetch(url, {
+			const response = await ofetch(url, {
 				headers: { 'Content-Type': 'application/json' },
 				method: 'POST',
 				body: form,
 			});
-			toReadirect(responses);
+			toRedirect(response);
 		} catch (err) {
 			console.log('error ->', err);
 		}
 	}
 
-	function toReadirect(resposes) {
-		formState.email = resposes.email;
+	// если response ok, обновляем email из response'a и редиректим
+	function toRedirect(response) {
+		formState.email = response.email;
 		changeAuthStatus();
 		navigateTo('/otp');
 	}
@@ -103,11 +111,7 @@ async function onSubmit() {
 	<div
 		class="grid-rows-[1fr, auto] grid h-full grid-cols-1 xl:grid-cols-2 xl:grid-rows-1"
 	>
-		<TheForm
-			:form-data="formData"
-			@send-data-form="sendDataForm"
-			@submit-emit="onSubmit"
-		/>
+		<TheForm />
 		<TheInfo :img-src="infoData.infoImgPath" :img-alt="infoData.imgAlt">
 			<template #title>Connect with any device.</template>
 			<template #text>Everything you need is an internet connection.</template>
@@ -115,4 +119,4 @@ async function onSubmit() {
 	</div>
 </template>
 
-<style scoped></style>
+<style></style>

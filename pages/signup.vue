@@ -12,9 +12,13 @@ const {
 	resetState,
 	changeСonfirmSignupReset,
 } = useFormState();
+
+// регистрируем middleware
 definePageMeta({
 	middleware: 'signup',
 });
+
+// Данные страницы signup
 const infoData = {
 	infoImgPath: '/_nuxt/assets/images/signup-img',
 	imgAlt: 'изображение связей',
@@ -91,6 +95,9 @@ const formData = {
 	},
 };
 
+// прокидываем props и emits
+provide('formData', { formData, onSubmit, sendDataForm, showPopup });
+
 function checkValidateForm() {
 	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
@@ -126,7 +133,7 @@ function sendDataForm(data) {
 	});
 	checkValidateForm();
 }
-async function submit() {
+async function onSubmit() {
 	if (formData.isValid.value) {
 		const url = 'https://dummyjson.com/users/add';
 		const form = JSON.stringify({
@@ -150,7 +157,9 @@ async function submit() {
 function toReadirect() {
 	navigateTo('/');
 }
-
+function showPopup() {
+	changeVisiblePopup();
+}
 function popupAnswer(answer) {
 	if (answer) {
 		resetState();
@@ -161,20 +170,13 @@ function popupAnswer(answer) {
 		changeVisiblePopup();
 	}
 }
-// onMounted(() => changeСonfirmSignupReset());
-onMounted(() => console.log(getPopupStatus));
 </script>
 
 <template>
 	<div
 		class="grid-rows-[1fr, auto] grid h-full grid-cols-1 xl:grid-cols-2 xl:grid-rows-1"
 	>
-		<TheForm
-			:form-data="formData"
-			@send-data-form="sendDataForm"
-			@submit="submit"
-			@show-popup="changeVisiblePopup"
-		/>
+		<TheForm />
 		<TheInfo :img-src="infoData.infoImgPath" :img-alt="infoData.imgAlt">
 			<template #title>Join us!</template>
 			<template #text>

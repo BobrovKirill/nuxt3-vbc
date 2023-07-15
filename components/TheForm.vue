@@ -5,32 +5,23 @@ import TheInput from '~/components/UI/TheInput.vue';
 import TheCheckbox from '~/components/UI/TheCheckbox.vue';
 import TheKeyInput from '~/components/UI/TheKeyInput.vue';
 
-const props = defineProps({
-	formData: Object,
-});
-const emits = defineEmits(['sendDataForm', 'submitEmit', 'showPopup']);
+const { formData, onSubmit, sendDataForm, showPopup } = inject('formData');
 // TODO переделать на Map
 const result = {};
 
-const inputList = props.formData.inputsData.filter(
+const inputList = formData.inputsData.filter(
 	(input) => input.type !== 'checkbox' && input.type !== 'number',
 );
-const checkboxList = props.formData.inputsData.filter(
+const checkboxList = formData.inputsData.filter(
 	(input) => input.type === 'checkbox',
 );
-const keysList = props.formData.inputsData.filter((input) => {
+const keysList = formData.inputsData.filter((input) => {
 	return input.type === 'number';
 });
 function getValue(data) {
 	const { name, type, value, required } = data;
 	result[name] = { type, value, required };
-	emits('sendDataForm', result);
-}
-function onSubmit() {
-	emits('submitEmit');
-}
-function showPopup() {
-	emits('showPopup');
+	sendDataForm(result);
 }
 </script>
 
@@ -39,15 +30,15 @@ function showPopup() {
 		<form
 			action="#"
 			class="flex w-full flex-col items-center gap-[25px]"
-			:class="props.formData.type === 'otp' ? 'max-w-[484px]' : 'max-w-[477px]'"
+			:class="formData.type === 'otp' ? 'max-w-[484px]' : 'max-w-[477px]'"
 			@submit.prevent="onSubmit"
 		>
-			<FormHeader :header-data="props.formData.headerData" />
+			<FormHeader :header-data="formData.headerData" />
 			<fieldset
 				ref="inputs"
 				class="grid w-full justify-center"
 				:class="
-					props.formData.type === 'otp'
+					formData.type === 'otp'
 						? 'otp-inputs grid-cols-6 gap-x-5'
 						: 'grid-cols-[453px] gap-y-2.5'
 				"
@@ -72,8 +63,8 @@ function showPopup() {
 				/>
 			</fieldset>
 			<FormFooter
-				:footer-data="props.formData.footerData"
-				:is-valid="props.formData.isValid.value"
+				:footer-data="formData.footerData"
+				:is-valid="formData.isValid.value"
 				@show-popup="showPopup"
 			/>
 		</form>
