@@ -25,7 +25,7 @@ const formData = {
 	inputsData: [
 		{
 			id: '1',
-			type: 'text',
+			type: 'number',
 			label: 'key number 1',
 			name: 'key1',
 			placeholder: '-',
@@ -36,7 +36,7 @@ const formData = {
 		},
 		{
 			id: '2',
-			type: 'text',
+			type: 'number',
 			label: 'key number 2',
 			name: 'key2',
 			placeholder: '-',
@@ -47,7 +47,7 @@ const formData = {
 		},
 		{
 			id: '3',
-			type: 'text',
+			type: 'number',
 			label: 'key number 3',
 			name: 'key3',
 			placeholder: '-',
@@ -58,7 +58,7 @@ const formData = {
 		},
 		{
 			id: '4',
-			type: 'text',
+			type: 'number',
 			label: 'key number 4',
 			name: 'key4',
 			placeholder: '-',
@@ -69,7 +69,7 @@ const formData = {
 		},
 		{
 			id: '5',
-			type: 'text',
+			type: 'number',
 			label: 'key number 5',
 			name: 'key5',
 			placeholder: '-',
@@ -80,7 +80,7 @@ const formData = {
 		},
 		{
 			id: '6',
-			type: 'text',
+			type: 'number',
 			label: 'key number 6',
 			name: 'key6',
 			placeholder: '-',

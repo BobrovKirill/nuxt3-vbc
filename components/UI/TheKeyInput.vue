@@ -10,46 +10,52 @@ type Props = {
 const props: Props = defineProps({
 	inputItem: Object,
 });
-// const emits = defineEmits(['sendValue']);
+const emits = defineEmits(['sendValue']);
+const keyInput = ref(null);
+const nextKeyInput = ref(null);
 
-// function sendEmit(input) {
-// 	const name = input.name;
-// 	const type = input.type;
-// 	const value = input.value;
-// 	const required = input.required;
-// 	emits('sendValue', { name, type, value, required });
-// }
-// function inputListener(event: { target: HTMLInputElement }) {
-// 	const target = event.target;
-// 	sendEmit(target);
-// }
-const kek = ref('');
-const getKek = computed(() => {
-	const value = kek.value;
-	if (/\D/g.test(value)) {
-		return kek.value;
+function sendEmit(input) {
+	const name = input.name;
+	const type = input.type;
+	const value = input.value;
+	const required = input.required;
+	emits('sendValue', { name, type, value, required });
+}
+function inputListener(event: { target: HTMLInputElement }) {
+	const target = event.target;
+	sendEmit(target);
+}
+const keyValue = ref('');
+watch(keyValue, (newValue, oldValue) => {
+	if (oldValue === '') {
+		keyValue.value = newValue;
 	} else {
-		return (kek.value = '');
+		keyValue.value = newValue.at(-1);
 	}
+	keyInput.value.querySelector('input').blur();
+	nextKeyInput.value.querySelector('input').focus();
+});
+onMounted(() => {
+	nextKeyInput.value = keyInput.value.nextElementSibling;
 });
 </script>
 
 <template>
-	<div class="label">
+	<div ref="keyInput" class="label">
 		<label class="sr-only" :for="props.inputItem.name">
 			{{ props.inputItem.label }}
 		</label>
 		<input
 			:id="props.inputItem.name"
-			v-model="getKek"
+			v-model="keyValue"
 			class="input"
 			:type="inputType"
 			:data-invalid="props.inputItem.valid.value"
 			:name="props.inputItem.name"
 			:required="props.inputItem.required"
 			:autocomplete="props.inputItem.autocomplete"
-			maxlength="1"
 			:placeholder="props.inputItem.placeholder"
+			@input="inputListener"
 		/>
 	</div>
 </template>
