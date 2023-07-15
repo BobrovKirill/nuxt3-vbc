@@ -1,9 +1,14 @@
 <script setup lang="ts">
 type Props = {
 	inputItem: {
+		name: string;
 		label: string;
 		type: string;
 		value: string;
+		placeholder: string;
+		required: boolean;
+		autocomplete: string;
+		valid: { value: boolean };
 	};
 };
 
@@ -25,6 +30,7 @@ function inputListener(event: { target: HTMLInputElement }) {
 	const target = event.target;
 	sendEmit(target);
 }
+// Не даем ввести пользователю больше 1 цифры, обновляем на последнюю введенную, после ввода перекидываем фокус на следующий инпут
 const keyValue = ref('');
 watch(keyValue, (newValue, oldValue) => {
 	if (oldValue === '') {
@@ -32,7 +38,6 @@ watch(keyValue, (newValue, oldValue) => {
 	} else {
 		keyValue.value = newValue.at(-1);
 	}
-	keyInput.value.querySelector('input').blur();
 	nextKeyInput.value?.querySelector('input').focus();
 });
 onMounted(() => {
@@ -74,13 +79,7 @@ onMounted(() => {
 input:-webkit-autofill {
 	-webkit-text-fill-color: #2d63b2 !important;
 }
-.icon {
-	@apply absolute left-2.5 top-1/2 z-10 h-[30px] w-[30px] -translate-y-2/4;
-}
 .icon + input {
 	@apply pl-[50px];
-}
-.eye {
-	@apply absolute right-0 top-0 z-10 h-full w-[50px];
 }
 </style>

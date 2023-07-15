@@ -76,6 +76,13 @@ function sendDataForm(data) {
 	checkValidateForm();
 }
 
+// если response ok, обновляем email из response'a и редиректим
+function toRedirect(response) {
+	formState.email = response.email;
+	changeAuthStatus();
+	navigateTo('/otp');
+}
+
 // fetch запрос - для теста -> username: kminchelle / password: 0lelplR
 async function onSubmit() {
 	if (formData.isValid.value) {
@@ -96,13 +103,6 @@ async function onSubmit() {
 		} catch (err) {
 			console.log('error ->', err);
 		}
-	}
-
-	// если response ok, обновляем email из response'a и редиректим
-	function toRedirect(response) {
-		formState.email = response.email;
-		changeAuthStatus();
-		navigateTo('/otp');
 	}
 }
 </script>

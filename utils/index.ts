@@ -1,4 +1,4 @@
-const isValidate = (name, value): boolean => {
+const isValidate = (name: string, value: string): boolean => {
 	if (name === 'email') {
 		// return /(?=^.{5,320}$)^([a-z\d_-]+\.)*[a-z\d_-]+@[a-z\d_-]+(\.[a-z\d_-]+)*\.[a-z]{2,6}$/.test(value); - если нужна валидации email
 		return value?.length >= 2;

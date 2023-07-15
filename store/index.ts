@@ -1,8 +1,16 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+type FormState = {
+	user: string;
+	email: string;
+	password: string;
+	'confirm-password': string;
+	check: boolean;
+	key: {};
+};
 
 export const useFormState = defineStore('stateForm', () => {
-	const formState = ref({
+	const formState = ref<FormState>({
 		user: '',
 		email: '',
 		password: '',
@@ -10,23 +18,32 @@ export const useFormState = defineStore('stateForm', () => {
 		check: false,
 		key: {},
 	});
-	const isСonfirmSignupReset = ref(false);
-	const isPopupStatus = ref(false);
-	const isAuth = ref(false);
 
+	const isConfirmResetSignup = ref<boolean>(false);
+	const isPopupStatus = ref<boolean>(false);
+	const isAuth = ref<boolean>(false);
+
+	// getters
 	const getIsAuth = computed(() => isAuth);
 	const getPopupStatus = computed(() => isPopupStatus);
-	const getСonfirmSignupReset = computed(() => isСonfirmSignupReset);
+	const getConfirmResetSignup = computed(() => isConfirmResetSignup);
 
-	const changeAuthStatus = () => {
+	// Toggle авторизации
+	const toggleAuthStatus = () => {
 		isAuth.value = !isAuth.value;
 	};
-	const changeVisiblePopup = () => {
+
+	// Toggle показ попапа
+	const toggleVisiblePopup = () => {
 		isPopupStatus.value = !isPopupStatus.value;
 	};
-	const changeСonfirmSignupReset = () => {
-		isСonfirmSignupReset.value = !isСonfirmSignupReset.value;
+
+	// Toggle согласия на редирект
+	const toggleConfirmResetSignup = () => {
+		isConfirmResetSignup.value = !isConfirmResetSignup.value;
 	};
+
+	// Сбрасываем весь стейт
 	const resetState = () => {
 		formState.value.user = '';
 		formState.value.password = '';
@@ -34,27 +51,33 @@ export const useFormState = defineStore('stateForm', () => {
 		formState.value.check = false;
 		formState.value.key = {};
 	};
+
+	// Сбрасываем пароли
 	const resetStatePasswords = () => {
 		formState.value.password = '';
 		formState.value['confirm-password'] = '';
 	};
+
+	// Проверяем обновилось ли значение инпута
 	const isChangeValue = (name, newValue) => formState.value[name] === newValue;
+
+	// Сравнение password и confirm-password
 	const isChangePassword = () =>
 		formState.value.password === formState.value['confirm-password'];
 
 	return {
 		isChangePassword,
 		formState,
-		isСonfirmSignupReset,
-		getСonfirmSignupReset,
+		isConfirmResetSignup,
+		getConfirmResetSignup,
 		isChangeValue,
-		changeСonfirmSignupReset,
+		toggleConfirmResetSignup,
 		resetState,
 		resetStatePasswords,
 		getIsAuth,
-		changeAuthStatus,
+		toggleAuthStatus,
 		isPopupStatus,
-		changeVisiblePopup,
+		toggleVisiblePopup,
 		getPopupStatus,
 	};
 });
