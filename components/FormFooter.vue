@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import type { PropType } from 'vue';
+import { FooterType } from '~/components/types';
+
 const props = defineProps({
-	footerData: Object,
+	footerData: {
+		type: Object as PropType<FooterType>,
+		required: true,
+	},
 	isValid: Boolean,
 });
-// const emits = defineEmits(['showPopup']);
-//
-// function showPopup() {
-// 	emits('showPopup');
-// }
 </script>
 
 <template>
@@ -24,14 +25,6 @@ const props = defineProps({
 			<NuxtLink class="nuxt text-[#8098F9]" :to="props.footerData.link.url">
 				{{ props.footerData.link.text }}
 			</NuxtLink>
-			<!--			<a-->
-			<!--				v-if="props.footerData.link.url === '/' && props.footerData.link.url"-->
-			<!--				class="link text-[#8098F9]"-->
-			<!--				:href="props.footerData.link.url"-->
-			<!--				@click.prevent="showPopup"-->
-			<!--			>-->
-			<!--				{{ props.footerData.link.text }}-->
-			<!--			</a>-->
 		</p>
 	</div>
 </template>

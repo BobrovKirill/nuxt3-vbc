@@ -1,38 +1,31 @@
 <script setup lang="ts">
-type Props = {
-	inputItem: {
-		name: string;
-		label: string;
-		type: string;
-		value: string;
-		placeholder: string;
-		required: boolean;
-		autocomplete: string;
-		valid: { value: boolean };
-	};
-};
+import type { PropType } from 'vue';
+import { InputType } from '~/components/types';
 
-const props: Props = defineProps({
-	inputItem: Object,
+const props = defineProps({
+	inputItem: {
+		type: Object as PropType<InputType>,
+		required: true,
+	},
 });
 const emits = defineEmits(['sendValue']);
-const keyInput = ref(null);
-const nextKeyInput = ref(null);
+const keyInput = ref<HTMLDivElement | null>(null);
+const nextKeyInput = ref<HTMLDivElement | null>(null);
 
-function sendEmit(input) {
+function sendEmit(input: HTMLInputElement) {
 	const name = input.name;
 	const type = input.type;
 	const value = input.value;
 	const required = input.required;
 	emits('sendValue', { name, type, value, required });
 }
-function inputListener(event: { target: HTMLInputElement }) {
-	const target = event.target;
+function inputListener(event: Event) {
+	const target = event.target as HTMLInputElement;
 	sendEmit(target);
 }
 // Не даем ввести пользователю больше 1 цифры, обновляем на последнюю введенную, после ввода перекидываем фокус на следующий инпут
-const keyValue = ref('');
-watch(keyValue, (newValue, oldValue) => {
+const keyValue = ref<string | undefined>('');
+watch(keyValue, (newValue: string, oldValue: string) => {
 	if (oldValue === '') {
 		keyValue.value = newValue;
 	} else {

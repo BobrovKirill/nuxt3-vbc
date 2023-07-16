@@ -1,18 +1,12 @@
 <script setup lang="ts">
-type Props = {
-	inputItem: {
-		label: string;
-		type: string;
-		value: string;
-		name: string;
-		required: boolean;
-		valid: { value: boolean };
-		links: [link: { id: number; text: string; url: string }];
-	};
-};
+import type { PropType } from 'vue';
+import { InputType } from '~/components/types';
 
-const props: Props = defineProps({
-	inputItem: Object,
+const props = defineProps({
+	inputItem: {
+		type: Object as PropType<InputType>,
+		required: true,
+	},
 });
 const emits = defineEmits(['sendValue']);
 
@@ -21,11 +15,11 @@ const input = ref();
 onMounted(() => {
 	sendEmit(input.value);
 });
-function inputListener(event: { target: HTMLInputElement }) {
-	const target = event.target;
+function inputListener(event: Event) {
+	const target = event.target as HTMLInputElement;
 	sendEmit(target);
 }
-function sendEmit(input) {
+function sendEmit(input: HTMLInputElement) {
 	emits('sendValue', {
 		name: input.name,
 		type: input.type,

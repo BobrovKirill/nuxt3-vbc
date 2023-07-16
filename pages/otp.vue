@@ -97,24 +97,16 @@ const formData = {
 	},
 };
 
-// прокидываем props и emits
-provide('formData', { formData, onSubmit, sendDataForm });
-function checkValidateForm() {
-	formData.isValid.value = validRequiredCounter(formData.inputsData);
-}
-
-// валидируем инпут
-const runValidate = (name, value) => isValidate(name, value);
-
-// принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
-function sendDataForm(data) {
+// Принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
+// Проверяем валидна ли форма, то есть валидны ли все required инпуты
+function sendDataForm(data: { name: string; required: string; value: string }) {
 	formData.inputsData.forEach((input) => {
 		if (data[input.name]?.required) {
-			input.valid.value = runValidate(input.name, data[input.name].value);
+			input.valid.value = isValidate(input.name, data[input.name].value);
 		}
 	});
 	formState.key = { ...data };
-	checkValidateForm();
+	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
 
 // преобразуем в строку все 6 ключей кода
@@ -147,6 +139,9 @@ async function onSubmit() {
 		}
 	}
 }
+
+// прокидываем props и emits
+provide('formData', { formData, onSubmit, sendDataForm });
 </script>
 
 <template>

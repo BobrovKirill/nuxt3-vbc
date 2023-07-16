@@ -34,7 +34,7 @@ const formData = {
 	},
 	inputsData: [
 		{
-			id: '1',
+			id: 1,
 			type: 'text',
 			label: 'user name',
 			name: 'user',
@@ -45,7 +45,7 @@ const formData = {
 			valid: ref(null),
 		},
 		{
-			id: '2',
+			id: 2,
 			type: 'text',
 			label: 'email',
 			name: 'email',
@@ -56,7 +56,7 @@ const formData = {
 			valid: ref(null),
 		},
 		{
-			id: '3',
+			id: 3,
 			type: 'password',
 			label: 'password',
 			name: 'password',
@@ -67,7 +67,7 @@ const formData = {
 			valid: ref(null),
 		},
 		{
-			id: '4',
+			id: 4,
 			type: 'password',
 			label: 'confirm-password',
 			name: 'confirm-password',
@@ -78,10 +78,10 @@ const formData = {
 			valid: ref(null),
 		},
 		{
-			id: '5',
+			id: 5,
 			type: 'checkbox',
 			label: 'Accept',
-			links: [{ id: '1', url: '#', text: 'terms and conditions' }],
+			links: [{ id: 1, url: '#', text: 'terms and conditions' }],
 			name: 'check',
 			icon: '',
 			required: true,
@@ -91,20 +91,12 @@ const formData = {
 	footerData: {
 		button: 'sign up',
 		text: 'You have account? ',
-		link: { id: '1', url: '/', text: 'Login now' },
+		link: { id: 1, url: '/', text: 'Login now' },
 	},
 };
 
-// прокидываем props и emits
-provide('formData', { formData, onSubmit, sendDataForm, showPopup });
-
-// Проверяем валидна ли форма, то есть валидны ли все required инпуты
-function checkValidateForm() {
-	formData.isValid.value = validRequiredCounter(formData.inputsData);
-}
-
 // Валидируем пароль и подтвердите пароль, в случае если был изменен пароль и то повторно проверяем и валидацию повторите пароль
-function validatePasswords(name, value) {
+function validatePasswords(name: string, value: string) {
 	if (name === 'confirm-password') {
 		return isChangePassword();
 	} else {
@@ -119,7 +111,7 @@ function validatePasswords(name, value) {
 }
 
 // делим инпуты пароль или подтвердите пароль от других
-function runValidate(name, value) {
+function runValidate(name: string, value: string) {
 	const isPasswordType = name.includes('password');
 	if (isPasswordType) {
 		return validatePasswords(name, value);
@@ -128,8 +120,9 @@ function runValidate(name, value) {
 	}
 }
 
-// принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
-function sendDataForm(data) {
+// Принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
+// Проверяем валидна ли форма, то есть валидны ли все required инпуты
+function sendDataForm(data: { name: string; required: string; value: string }) {
 	formData.inputsData.forEach((input) => {
 		if (!isChangeValue(input.name, data[input.name]?.value)) {
 			formState[input.name] = data[input.name]?.value;
@@ -138,11 +131,12 @@ function sendDataForm(data) {
 			}
 		}
 	});
-	checkValidateForm();
+	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
 
-function toRedirect() {
-	navigateTo('/');
+function toRedirect(response) {
+	formState.email = response.email;
+	navigateTo('/otp');
 }
 
 // fetch запрос
@@ -156,12 +150,12 @@ async function onSubmit() {
 			check: formState.check,
 		});
 		try {
-			await ofetch(url, {
+			const response = await ofetch(url, {
 				headers: { 'Content-Type': 'application/json' },
 				method: 'POST',
 				body: form,
 			});
-			toRedirect();
+			toRedirect(response);
 		} catch (err) {
 			console.log('error ->', err);
 		}
@@ -179,11 +173,14 @@ function popupAnswer(answer) {
 		resetState();
 		toggleConfirmResetSignup();
 		toggleVisiblePopup();
-		toRedirect();
+		navigateTo('/');
 	} else {
 		toggleVisiblePopup();
 	}
 }
+
+// прокидываем props и emits
+provide('formData', { formData, onSubmit, sendDataForm, showPopup });
 </script>
 
 <template>

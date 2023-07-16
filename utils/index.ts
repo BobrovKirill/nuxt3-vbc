@@ -6,18 +6,18 @@ const isValidate = (name: string, value: string): boolean => {
 		// return /(?=^.{8,128}$)^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/.test(value); - если нужна валидации пароля
 		return value?.length >= 2;
 	} else if (name === 'check') {
-		return value;
+		return !!value;
 	} else if (name.includes('key')) {
 		return value?.length >= 1;
 	} else {
 		return false;
 	}
 };
-const isRef = (value) => Object.hasOwn(value, '_rawValue');
-const validRequiredCounter = (arr) => {
+const isRef = (value: {}): boolean => Object.hasOwn(value, '_rawValue');
+const validRequiredCounter = (arr: []) => {
 	let requiredCount = 0;
 	let validCount = 0;
-	arr.forEach((item) => {
+	arr.forEach((item: { valid: Ref<boolean> | string; required: boolean }) => {
 		if (isRef(item.valid) ? item.valid.value : item.value) {
 			validCount += 1;
 		}

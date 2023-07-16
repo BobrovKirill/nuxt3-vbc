@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+
 interface FormState {
 	user: string;
 	email: string;
@@ -10,7 +10,7 @@ interface FormState {
 }
 
 export const useFormState = defineStore('stateForm', () => {
-	const formState: FormState = ref({
+	const formState = ref<FormState>({
 		user: '',
 		email: '',
 		password: '',
@@ -24,9 +24,11 @@ export const useFormState = defineStore('stateForm', () => {
 	const isAuth = ref<boolean>(false);
 
 	// getters
-	const getIsAuth = computed(() => isAuth);
-	const getPopupStatus = computed(() => isPopupStatus);
-	const getConfirmResetSignup = computed(() => isConfirmResetSignup);
+	const getIsAuth: ComputedRef = computed((): Ref => isAuth);
+	const getPopupStatus: ComputedRef = computed((): Ref => isPopupStatus);
+	const getConfirmResetSignup: ComputedRef = computed(
+		(): Ref => isConfirmResetSignup,
+	);
 
 	// Toggle авторизации
 	const toggleAuthStatus = () => {
@@ -59,7 +61,8 @@ export const useFormState = defineStore('stateForm', () => {
 	};
 
 	// Проверяем обновилось ли значение инпута
-	const isChangeValue = (name, newValue) => formState.value[name] === newValue;
+	const isChangeValue = (name: string, newValue: string) =>
+		formState.value[name] === newValue;
 
 	// Сравнение password и confirm-password
 	const isChangePassword = () =>

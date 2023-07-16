@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import type { PropType } from 'vue';
+import { HeaderType } from '~/components/types';
+
 const props = defineProps({
-	headerData: Object,
+	headerData: {
+		type: Object as PropType<HeaderType>,
+		required: true,
+	},
 });
 </script>
 

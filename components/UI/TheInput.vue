@@ -1,20 +1,12 @@
 <script setup lang="ts">
-type Props = {
-	inputItem: {
-		label: string;
-		type: string;
-		value: string;
-		icon: string;
-		name: string;
-		placeholder: string;
-		required: boolean;
-		autocomplete: string;
-		valid: { value: boolean };
-	};
-};
+import type { PropType } from 'vue';
+import { InputType } from '~/components/types';
 
-const props: Props = defineProps({
-	inputItem: Object,
+const props = defineProps({
+	inputItem: {
+		type: Object as PropType<InputType>,
+		required: true,
+	},
 });
 const emits = defineEmits(['sendValue']);
 
@@ -22,22 +14,25 @@ const emits = defineEmits(['sendValue']);
 const isPasswordType = (text: string): boolean => text === 'password';
 
 // Если инпут с паролем оборачиваем в реф
-const inputType = isPasswordType(props.inputItem.type)
-	? ref<string | undefined>(props.inputItem.type)
+const inputType: string = isPasswordType(props.inputItem.type)
+	? ref<string>(props.inputItem.type).value
 	: props.inputItem.type;
 
-const eyeIcon = ref(null);
-const input = ref();
+const eyeIcon = ref<null | SVGUseElement>(null);
+const input = ref<null | HTMLInputElement>(null);
 // меняем тип инпута при нажатии на кнопку
 function toggleShowPassword() {
-	const isPassword = isPasswordType(inputType.value);
-	inputType.value = isPassword ? 'text' : 'password';
+	if (!input.value || !eyeIcon.value) {
+		return;
+	}
+	const isPassword = isPasswordType(input.value.type);
+	input.value.type = isPassword ? 'text' : 'password';
 	eyeIcon.value.setAttribute(
 		'xlink:href',
 		`${isPassword ? '#open-eye' : '#close-eye'}`,
 	);
 }
-function sendEmit(input) {
+function sendEmit(input: HTMLInputElement) {
 	const name = input.name;
 	const type = input.type;
 	const value = input.value;
@@ -45,12 +40,12 @@ function sendEmit(input) {
 	emits('sendValue', { name, type, value, required });
 }
 onMounted(() => {
-	if (!input.value) {
+	if (input.value && input.value.value) {
 		sendEmit(input.value);
 	}
 });
-function inputListener(event: { target: HTMLInputElement }) {
-	const target = event.target;
+function inputListener(event: Event) {
+	const target = event.target as HTMLInputElement;
 	sendEmit(target);
 }
 </script>

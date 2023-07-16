@@ -2,8 +2,8 @@
 import { ofetch } from 'ofetch';
 import { isValidate, validRequiredCounter } from '~/utils';
 import { useFormState } from '~/store';
+import { FormType } from '~/components/types';
 const { formState, isChangeValue, toggleAuthStatus } = useFormState();
-
 // регистрируем middleware
 definePageMeta({
 	middleware: 'signin',
@@ -14,7 +14,7 @@ const infoData = {
 	infoImgPath: '/_nuxt/assets/images/login-img',
 	imgAlt: 'изображение гаджетов',
 };
-const formData = {
+const formData: FormType = {
 	type: 'signin',
 	isValid: ref(false),
 	headerData: {
@@ -23,7 +23,7 @@ const formData = {
 	},
 	inputsData: [
 		{
-			id: '1',
+			id: 1,
 			type: 'text',
 			label: 'email',
 			name: 'email',
@@ -34,7 +34,7 @@ const formData = {
 			valid: ref(null),
 		},
 		{
-			id: '2',
+			id: 2,
 			type: 'password',
 			label: 'password',
 			name: 'password',
@@ -48,36 +48,26 @@ const formData = {
 	footerData: {
 		button: 'log in',
 		text: 'Don’t have account?',
-		link: { id: '1', url: '/signup', text: 'Create an account' },
+		link: { id: 1, url: '/signup', text: 'Create an account' },
 	},
 };
 
-// прокидываем props и emits
-provide('formData', { formData, onSubmit, sendDataForm });
-
+// Принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
 // Проверяем валидна ли форма, то есть валидны ли все required инпуты
-function checkValidateForm() {
-	formData.isValid.value = validRequiredCounter(formData.inputsData);
-}
-
-// валидируем инпут
-const runValidate = (name, value) => isValidate(name, value);
-
-// принимаем инпут записываем в стейт его новое значение если оно изменилось если поле required, то отправляем на валидацию.
-function sendDataForm(data) {
+function sendDataForm(data: { name: string; required: string; value: string }) {
 	formData.inputsData.forEach((input) => {
 		if (!isChangeValue(input.name, data[input.name]?.value)) {
 			formState[input.name] = data[input.name]?.value;
 			if (data[input.name]?.required) {
-				input.valid.value = runValidate(input.name, data[input.name].value);
+				input.valid.value = isValidate(input.name, data[input.name].value);
 			}
 		}
 	});
-	checkValidateForm();
+	formData.isValid.value = validRequiredCounter(formData.inputsData);
 }
 
 // если response ok, обновляем email из response'a и редиректим
-function toRedirect(response) {
+function toRedirect(response: { email: string }) {
 	formState.email = response.email;
 	toggleAuthStatus();
 	navigateTo('/otp');
@@ -105,6 +95,9 @@ async function onSubmit() {
 		}
 	}
 }
+
+// прокидываем props и emits
+provide('formData', { formData, onSubmit, sendDataForm });
 </script>
 
 <template>

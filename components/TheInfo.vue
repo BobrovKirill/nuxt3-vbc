@@ -1,13 +1,14 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { SymbolKind } from 'vscode-languageserver-types';
-import String = SymbolKind.String;
+<script setup lang="ts">
+import type { PropType } from 'vue';
 
-export default defineComponent({
-	name: 'TheInfo',
-	props: {
-		imgSrc: String,
-		imgAlt: String,
+const props = defineProps({
+	imgSrc: {
+		type: String as PropType<string>,
+		required: true,
+	},
+	imgAlt: {
+		type: String as PropType<string>,
+		required: true,
 	},
 });
 </script>
@@ -20,15 +21,17 @@ export default defineComponent({
 			<picture
 				class="col-start-1 col-end-2 row-start-1 row-end-2 h-full w-full"
 			>
-				<source type="image/webp" :srcset="imgSrc + '.webp'" />
+				<source type="image/webp" :srcset="props.imgSrc + '.webp'" />
 				<source
 					type="image/png"
-					:srcset="imgSrc + '.png' + ', ' + imgSrc + '-2x.png' + ' 2x'"
+					:srcset="
+						props.imgSrc + '.png' + ', ' + props.imgSrc + '-2x.png' + ' 2x'
+					"
 				/>
 				<img
 					class="h-full object-contain"
-					:src="imgSrc + '.png'"
-					:alt="imgAlt"
+					:src="props.imgSrc + '.png'"
+					:alt="props.imgAlt"
 				/>
 			</picture>
 			<p

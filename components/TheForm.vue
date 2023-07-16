@@ -8,23 +8,32 @@ import TheKeyInput from '~/components/UI/TheKeyInput.vue';
 const { formData, onSubmit, sendDataForm, showPopup } = inject('formData');
 // TODO переделать на Map
 const result = {};
-const form = ref(null);
+const form = ref<HTMLFormElement | null>(null);
 
 const inputList = formData.inputsData.filter(
-	(input) => input.type !== 'checkbox' && input.type !== 'number',
+	(input: HTMLInputElement) =>
+		input.type !== 'checkbox' && input.type !== 'number',
 );
 const checkboxList = formData.inputsData.filter(
-	(input) => input.type === 'checkbox',
+	(input: HTMLInputElement) => input.type === 'checkbox',
 );
-const keysList = formData.inputsData.filter((input) => {
+const keysList = formData.inputsData.filter((input: HTMLInputElement) => {
 	return input.type === 'number';
 });
-function getValue(data) {
+function getValue(data: {
+	name: string;
+	type: string;
+	value: string;
+	required: boolean;
+}) {
 	const { name, type, value, required } = data;
 	result[name] = { type, value, required };
 	sendDataForm(result);
 }
 function submit() {
+	if (!form.value) {
+		return;
+	}
 	form.value.reset();
 	onSubmit();
 }
