@@ -24,12 +24,13 @@ function inputListener(event: Event) {
 	sendEmit(target);
 }
 // Не даем ввести пользователю больше 1 цифры, обновляем на последнюю введенную, после ввода перекидываем фокус на следующий инпут
-const keyValue = ref<string | undefined>('');
-watch(keyValue, (newValue: string, oldValue: string) => {
-	if (oldValue === '') {
+const keyValue = ref<number>(null);
+watch(keyValue, (newValue: number) => {
+	if (newValue < 9) {
 		keyValue.value = newValue;
 	} else {
-		keyValue.value = newValue.at(-1);
+		const lastNumber = newValue.toString().at(-1);
+		keyValue.value = Number(lastNumber);
 	}
 	nextKeyInput.value?.querySelector('input').focus();
 });

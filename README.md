@@ -18,6 +18,12 @@ npm install
 npm run dev
 
 ```
+если будет ругаться Pinia
+```bash
+# npm
+npm install pinia -f
+
+```
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
