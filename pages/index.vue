@@ -77,11 +77,11 @@ function toRedirect(response: { email: string }) {
 async function onSubmit() {
 	if (formData.isValid.value) {
 		const url = 'https://dummyjson.com/auth/login';
-		// const username = formState.email;
-		// const password = formState.password;
+		const username = formState.email;
+		const password = formState.password;
 		const form = JSON.stringify({
-			username: 'kminchelle',
-			password: '0lelplR',
+			username,
+			password,
 		});
 		try {
 			const response = await ofetch(url, {
