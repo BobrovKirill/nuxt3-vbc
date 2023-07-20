@@ -9,9 +9,9 @@ interface FormType {
 interface HeaderType {
 	title: string;
 	subtitle: string;
-	text: string;
-	email: string;
-	link: string;
+	text?: string;
+	email?: string;
+	link?: string;
 }
 
 interface FooterType {
@@ -30,7 +30,7 @@ interface InputType {
 	icon: string;
 	required: boolean;
 	valid: Ref<null | boolean>;
-	links: LinkType[];
+	links?: LinkType[];
 }
 
 interface LinkType {
